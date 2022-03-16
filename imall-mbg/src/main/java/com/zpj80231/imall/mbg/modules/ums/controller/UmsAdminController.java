@@ -1,11 +1,8 @@
 package com.zpj80231.imall.mbg.modules.ums.controller;
 
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zpj80231.imall.common.api.CommonPage;
 import com.zpj80231.imall.common.api.CommonResult;
-import com.zpj80231.imall.common.api.ResultCode;
-import com.zpj80231.imall.common.exception.Asserts;
 import com.zpj80231.imall.mbg.modules.ums.entity.UmsAdmin;
 import com.zpj80231.imall.mbg.modules.ums.service.UmsAdminService;
 import io.swagger.annotations.Api;
@@ -19,9 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * <p>
  * 后台用户表 前端控制器
- * </p>
  *
  * @author zpj80231
  * @since 2020-09-29
@@ -37,7 +32,6 @@ public class UmsAdminController {
     @GetMapping("/list")
     @ApiOperation(value = "查询所有用户信息", notes = "用户信息")
     public CommonResult<List<UmsAdmin>> findAll() {
-        Asserts.fail("查询所有用户信息出错啦");
         List<UmsAdmin> list = umsAdminService.list();
         return CommonResult.success(list);
     }
@@ -46,7 +40,6 @@ public class UmsAdminController {
     @ApiOperation(value = "分页查询用户信息", notes = "用户")
     public CommonResult<CommonPage<UmsAdmin>> findPage(@RequestParam(required = true, name = "pageNum", defaultValue = "1") Long pageNum,
                                                        @RequestParam(required = true, name = "pageSize", defaultValue = "2") Long pageSize) {
-        Asserts.fail(ResultCode.FORBIDDEN);
         Page<UmsAdmin> page = new Page<>(pageNum, pageSize);
         umsAdminService.page(page);
         CommonPage<UmsAdmin> restPage = CommonPage.restPage(page);

@@ -35,7 +35,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("imall")
                 .description("imall API 文档")
-                .termsOfServiceUrl("http://localhost:8999/")
+                .termsOfServiceUrl("http://localhost:8080/swagger-ui.html")
                 .contact("zpj80231@163.com")
                 .version("1.0")
                 .build();

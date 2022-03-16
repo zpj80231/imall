@@ -15,9 +15,15 @@
     <!--自定义项 开始-->
     <!--*****************************************************************************-->
 
+    <!--引用默认日志配置-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!--使用默认的控制台日志输出实现-->
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
     <!-- 定义日志文件 输出位置 -->
     <property name="log.home_dir" value="logs"/>
     <property name="log.log_name" value="log"/>
+    <property name="log.app_name" value="imal"/>
     <!-- 日志最大的历史 30天 -->
     <property name="log.maxHistory" value="30"/>
     <property name="log.maxSize" value="5MB"/>
@@ -34,21 +40,21 @@
     <!-- white:白色 -->
     <!-- magenta:洋红 -->
     <property name="CONSOLE_LOG_PATTERN"
-              value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) |%highlight(%-5level) |%blue(%thread) |%blue(%file:%line) |%green(%logger) |%cyan(%msg%n)"/>
+              value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %blue(%thread) |%blue(%file:%line) |%green(%logger) |%cyan(%msg%n)"/>
 
     <!--*****************************************************************************-->
     <!--自定义项 结束-->
     <!--*****************************************************************************-->
 
     <!-- ConsoleAppender 控制台输出日志 -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>
-                <!-- 设置日志输出格式 -->
-                ${CONSOLE_LOG_PATTERN}
-            </pattern>
-        </encoder>
-    </appender>
+<!--    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder>-->
+<!--            <pattern>-->
+<!--                &lt;!&ndash; 设置日志输出格式 &ndash;&gt;-->
+<!--                ${CONSOLE_LOG_PATTERN}-->
+<!--            </pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
 
     <!-- ERROR级别日志 -->
     <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 RollingFileAppender -->
