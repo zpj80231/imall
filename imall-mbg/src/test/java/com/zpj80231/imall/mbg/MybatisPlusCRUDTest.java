@@ -64,6 +64,7 @@ public class MybatisPlusCRUDTest {
         System.err.println("每页记录数：" + selectPage.getSize());
         System.err.println("总条数：" + selectPage.getTotal());
         System.err.println("总页数：" + selectPage.getPages());
+        System.err.println("数据：" + selectPage.getRecords());
         selectPage.getRecords().forEach(System.out::println);
     }
 
