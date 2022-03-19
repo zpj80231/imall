@@ -7,6 +7,7 @@ import com.zpj80231.imall.mbg.modules.ums.entity.UmsAdmin;
 import com.zpj80231.imall.mbg.modules.ums.service.UmsAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/ums/umsAdmin")
 @Api(value = " 后台用户管理 ", tags = "Ums模块")
+@Slf4j
 public class UmsAdminController {
 
     @Autowired
@@ -40,6 +42,7 @@ public class UmsAdminController {
     @ApiOperation(value = "分页查询用户信息", notes = "用户")
     public CommonResult<CommonPage<UmsAdmin>> findPage(@RequestParam(required = true, name = "pageNum", defaultValue = "1") Long pageNum,
                                                        @RequestParam(required = true, name = "pageSize", defaultValue = "2") Long pageSize) {
+        log.info("pageNum: [{}], pageSize: [{}]", pageNum, pageSize);
         Page<UmsAdmin> page = new Page<>(pageNum, pageSize);
         umsAdminService.page(page);
         CommonPage<UmsAdmin> restPage = CommonPage.restPage(page);
