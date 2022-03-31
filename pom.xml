@@ -2,24 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.imall</groupId>
+    <artifactId>imall</artifactId>
+    <version>${imall-version}</version>
+    <name>imall</name>
+    <description>imall project for zpj80231</description>
     <packaging>pom</packaging>
-    <modules>
-        <module>imall-common</module>
-        <module>imall-mbg</module>
-    </modules>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.zpj80231.imall</groupId>
-    <artifactId>imall</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>imall</name>
-    <description>imall project for zpj80231</description>
 
     <properties>
+        <imall-version>1.0.0</imall-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -34,10 +32,13 @@
         <knife4j.version>2.0.5</knife4j.version>
 
         <hutool.version>4.5.7</hutool.version>
-
-        <imall-common.version>0.0.1-SNAPSHOT</imall-common.version>
-        <imall-mbg.version>0.0.1-SNAPSHOT</imall-mbg.version>
     </properties>
+
+    <modules>
+        <module>imall-common</module>
+        <module>imall-mbg</module>
+        <module>imall-note</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -58,19 +59,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- imall 通用模块 -->
-            <dependency>
-                <groupId>com.zpj80231.imall</groupId>
-                <artifactId>imall-common</artifactId>
-                <version>${imall-common.version}</version>
-            </dependency>
-            <!-- imall MBG(代码自动生成) 模块-->
-            <dependency>
-                <groupId>com.zpj80231.imall</groupId>
-                <artifactId>imall-mbg</artifactId>
-                <version>${imall-mbg.version}</version>
-            </dependency>
-
             <!--Hutool Java 工具包 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
