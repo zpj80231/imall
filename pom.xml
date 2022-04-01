@@ -24,6 +24,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
+        <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
+
         <mysql-connector.version>8.0.16</mysql-connector.version>
         <druid.version>1.1.10</druid.version>
         <mybatis-plus-starter.version>3.4.0</mybatis-plus-starter.version>
@@ -45,12 +47,13 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -61,13 +64,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--Hutool Java 工具包 -->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
-
             <!--Mysql数据库驱动-->
             <dependency>
                 <groupId>mysql</groupId>

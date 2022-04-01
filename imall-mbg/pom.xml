@@ -19,22 +19,10 @@
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>com.imall</groupId>
-            <artifactId>imall-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
         <!-- 通用模块 -->
         <dependency>
             <groupId>com.imall</groupId>
             <artifactId>imall-common</artifactId>
-        </dependency>
-
-        <!--Hutool Java 工具包 -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
         </dependency>
 
         <!-- 数据库相关 -->
