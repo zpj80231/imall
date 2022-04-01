@@ -19,22 +19,22 @@
     </parent>
 
     <properties>
-        <imall-version>1.0.0</imall-version>
+        <imall-version>0.0.1-SNAPSHOT</imall-version>
+        <imall-common-version>0.0.1-SNAPSHOT</imall-common-version>
+        <imall-mbg-version>0.0.1-SNAPSHOT</imall-mbg-version>
+        <imall-note-version>0.0.1-SNAPSHOT</imall-note-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-
+        <skipTests>true</skipTests>
         <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
-
         <mysql-connector.version>8.0.16</mysql-connector.version>
         <druid.version>1.1.10</druid.version>
         <mybatis-plus-starter.version>3.4.0</mybatis-plus-starter.version>
         <mybatis-plus-generator.version>3.4.0</mybatis-plus-generator.version>
         <velocity.version>2.2</velocity.version>
-
         <swagger.version>2.9.2</swagger.version>
         <knife4j.version>2.0.5</knife4j.version>
-
         <hutool.version>4.5.7</hutool.version>
     </properties>
 
@@ -51,6 +51,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
@@ -64,6 +69,21 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.imall</groupId>
+                <artifactId>imall-common</artifactId>
+                <version>${imall-common-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.imall</groupId>
+                <artifactId>imall-mbg</artifactId>
+                <version>${imall-mbg-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.imall</groupId>
+                <artifactId>imall-note</artifactId>
+                <version>${imall-note-version}</version>
+            </dependency>
             <!--Mysql数据库驱动-->
             <dependency>
                 <groupId>mysql</groupId>
