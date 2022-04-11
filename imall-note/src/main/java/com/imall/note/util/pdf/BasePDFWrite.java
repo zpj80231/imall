@@ -303,9 +303,10 @@ public class BasePDFWrite {
         }
     }
 
-//    private static String binPath = "D:\\software\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe";// 插件引入地址
+    // 插件引入地址，先解压phantomjs.exe，然后添加到系统环境变量
+//    private static String binPath = "D:\\software\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe";
 //    private static final String JSpath = path+"\\echarts-convert1.js";
-    private static final String JSpath = "D:/phantomjs/echarts-convert/echarts-convert1.js";
+    private static final String JSpath = "imall-note/src/main/resources/static/js/phantomjs/echarts-convert/echarts-convert.js";
     public String generateEChart(String options, Map<String,Object> resultMap) {
         String dataPath = writeFile(options);
         String fileName= "test-"+UUID.randomUUID().toString().substring(0, 8) + ".png";
@@ -420,7 +421,7 @@ footerTable.setTableFooter(writer, textfont_H);//添加页脚
 
     public static void main(String[] args) throws Exception {
         // File file = new File(path + "\\T1_font.pdf");
-        File file = new File("imall-note/src/main/resources/static/T1_pdf_test.pdf");
+        File file = new File("imall-note/src/main/resources/static/pdf_test.pdf");
         if (!file.exists()) {   //文件不存在则创建文件，先创建目录
             File dir = new File(file.getParent());
             dir.mkdirs();
@@ -429,6 +430,7 @@ footerTable.setTableFooter(writer, textfont_H);//添加页脚
         //file.createNewFile();
         BasePDFWrite basePDFWrite = new BasePDFWrite(file);
         basePDFWrite.generatePDF_text();
+        basePDFWrite.addImage("imall-note/src/main/resources/static/img/图片1.png");
         basePDFWrite.generatePDF_table();
     }
 }
