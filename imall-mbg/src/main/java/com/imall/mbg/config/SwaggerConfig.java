@@ -39,7 +39,6 @@ public class SwaggerConfig {
                 //.termsOfServiceUrl("http://localhost:8080/swagger-ui.html")
                 // 美化后地址，doc.html
                 .termsOfServiceUrl("http://localhost:8080/doc.html")
-                .contact("zpj80231@163.com")
                 .version("1.0")
                 .build();
     }
