@@ -3,7 +3,7 @@ package com.imall.thirdparty.utils;
 import com.alibaba.fastjson.JSON;
 import com.imall.thirdparty.common.CommonRequest;
 import com.imall.thirdparty.common.CommonResult;
-import com.imall.thirdparty.common.TokenSignPlugin;
+import com.imall.thirdparty.common.ThirdPartyPublicParamPlugin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.DigestUtils;
 
@@ -17,7 +17,7 @@ import java.util.Base64;
  * @date 2022/7/12
  */
 @Slf4j
-public class SignUtil {
+public class ThirdPartyPublicParamSignUtil {
 
     /**
      * 生成请求签名
@@ -29,7 +29,7 @@ public class SignUtil {
         Long ts = Long.valueOf(requestParam.getTs());
         String token = requestParam.getToken();
         String data = JSON.toJSONString(requestParam.getData());
-        String corp_secret = TokenSignPlugin.getCorpSecret();
+        String corp_secret = ThirdPartyPublicParamPlugin.getCorpSecret();
         String originalSign = "ts=" + ts + "&token=" + token + "&data=" + data + "&corp_secret=" + corp_secret;
         String sign = DigestUtils.md5DigestAsHex(originalSign.getBytes(StandardCharsets.UTF_8));
         if (log.isDebugEnabled()) {
@@ -49,7 +49,7 @@ public class SignUtil {
         Long ts = Long.valueOf(requestParam.getTs());
         String token = requestParam.getToken();
         String data = JSON.toJSONString(requestParam.getData());
-        String corp_secret = TokenSignPlugin.getCorpSecret();
+        String corp_secret = ThirdPartyPublicParamPlugin.getCorpSecret();
         String originalSign = "ts=" + ts + "&token=" + token + "&data=" + data + "&corp_secret=" + corp_secret;
         String sign = DigestUtils.md5DigestAsHex(originalSign.getBytes(StandardCharsets.UTF_8));
         if (log.isDebugEnabled()) {
@@ -72,7 +72,7 @@ public class SignUtil {
         String message = responseParam.getMessage();
         Long ts = responseParam.getTs();
         String data = JSON.toJSONString(responseParam.getData());
-        String corp_secret = TokenSignPlugin.getCorpSecret();
+        String corp_secret = ThirdPartyPublicParamPlugin.getCorpSecret();
         String originalSign = "code=" + code + "&message=" + message + "&ts=" + ts + "&data=" + data + "&corp_secret=" + corp_secret;
         String sign = DigestUtils.md5DigestAsHex(originalSign.getBytes(StandardCharsets.UTF_8));
         if (log.isDebugEnabled()) {

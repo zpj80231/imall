@@ -10,7 +10,7 @@ import java.util.Date;
  * @date 2022/7/15
  */
 @Data
-public class IncomingAndOutgoingCDRsDTO {
+public class InOutCdrDTO {
 
     /**
      * 通话时间

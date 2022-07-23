@@ -1,7 +1,7 @@
 package com.imall.thirdparty.support;
 
 import com.alibaba.fastjson.JSON;
-import com.imall.thirdparty.annotations.DkyThirdPartyParam;
+import com.imall.thirdparty.annotations.ThirdPartyPublicParam;
 import com.imall.thirdparty.common.CommonResult;
 import com.imall.thirdparty.exception.ApiCode;
 import lombok.SneakyThrows;
@@ -30,8 +30,8 @@ public class ThirdPartyResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(@Nonnull MethodParameter methodParameter,
                             @Nonnull Class<? extends HttpMessageConverter<?>> aClass) {
-        DkyThirdPartyParam methodAnnotation = AnnotationUtils.findAnnotation(methodParameter.getMethod(), DkyThirdPartyParam.class);
-        DkyThirdPartyParam classAnnotation = AnnotationUtils.findAnnotation(methodParameter.getDeclaringClass(), DkyThirdPartyParam.class);
+        ThirdPartyPublicParam methodAnnotation = AnnotationUtils.findAnnotation(methodParameter.getMethod(), ThirdPartyPublicParam.class);
+        ThirdPartyPublicParam classAnnotation = AnnotationUtils.findAnnotation(methodParameter.getDeclaringClass(), ThirdPartyPublicParam.class);
         return methodAnnotation != null || classAnnotation != null;
     }
 

@@ -1,7 +1,7 @@
 package com.imall.thirdparty.modules.controller;
 
-import com.imall.thirdparty.annotations.DkyThirdPartyParam;
-import com.imall.thirdparty.common.TokenSignPlugin;
+import com.imall.thirdparty.annotations.ThirdPartyPublicParam;
+import com.imall.thirdparty.common.ThirdPartyPublicParamPlugin;
 import com.imall.thirdparty.constants.TokenTypeEnum;
 import com.imall.thirdparty.exception.ApiException;
 import com.imall.thirdparty.modules.pojo.dto.TokenDTO;
@@ -29,13 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TokenController {
 
     @ApiOperation("获取token")
-    @DkyThirdPartyParam(tokenType = TokenTypeEnum.Empty)
+    @ThirdPartyPublicParam(tokenType = TokenTypeEnum.Empty)
     @PostMapping("/token")
     public TokenDTO getToken(@PathVariable("companyid") String companyId,
                              @RequestBody @Validated TokenVo tokenVo) throws ApiException {
         log.info("companyId: {}, tokenVo: {}", companyId, tokenVo);
         String tokenType = tokenVo.getTokentype();
-        String token = TokenSignPlugin.createToken(tokenType, companyId);
+        String token = ThirdPartyPublicParamPlugin.createToken(tokenType, companyId);
         return new TokenDTO(tokenType, token);
     }
 }

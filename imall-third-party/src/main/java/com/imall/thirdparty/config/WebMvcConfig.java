@@ -1,6 +1,6 @@
 package com.imall.thirdparty.config;
 
-import com.imall.thirdparty.filter.DkyThirdPartyParamInterceptor;
+import com.imall.thirdparty.filter.ThirdPartyPublicParamInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 拦截器注册对象, 指定要拦截的请求
-        registry.addInterceptor(new DkyThirdPartyParamInterceptor())
+        registry.addInterceptor(new ThirdPartyPublicParamInterceptor())
                 .addPathPatterns("/json/**");
     }
 }

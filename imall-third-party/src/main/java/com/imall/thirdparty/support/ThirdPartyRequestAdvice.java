@@ -2,9 +2,9 @@ package com.imall.thirdparty.support;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONValidator;
-import com.imall.thirdparty.annotations.DkyThirdPartyParam;
+import com.imall.thirdparty.annotations.ThirdPartyPublicParam;
 import com.imall.thirdparty.common.CommonRequest;
-import com.imall.thirdparty.common.TokenSignPlugin;
+import com.imall.thirdparty.common.ThirdPartyPublicParamPlugin;
 import com.imall.thirdparty.exception.ApiCode;
 import com.imall.thirdparty.exception.ApiException;
 import lombok.SneakyThrows;
@@ -39,8 +39,8 @@ public class ThirdPartyRequestAdvice extends RequestBodyAdviceAdapter {
 
     @Override
     public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
-        DkyThirdPartyParam methodAnnotation = AnnotationUtils.findAnnotation(methodParameter.getMethod(), DkyThirdPartyParam.class);
-        DkyThirdPartyParam classAnnotation = AnnotationUtils.findAnnotation(methodParameter.getDeclaringClass(), DkyThirdPartyParam.class);
+        ThirdPartyPublicParam methodAnnotation = AnnotationUtils.findAnnotation(methodParameter.getMethod(), ThirdPartyPublicParam.class);
+        ThirdPartyPublicParam classAnnotation = AnnotationUtils.findAnnotation(methodParameter.getDeclaringClass(), ThirdPartyPublicParam.class);
         return methodAnnotation != null || classAnnotation != null;
     }
 
@@ -61,8 +61,8 @@ public class ThirdPartyRequestAdvice extends RequestBodyAdviceAdapter {
         }
         CommonRequest commonRequest = JSON.parseObject(body, CommonRequest.class);
         // 校验请求对象
-        CommonRequest validatedCommonRequest = TokenSignPlugin.validateCommonRequestParam(commonRequest);
-        TokenSignPlugin.validateToken(methodParameter, commonRequest);
+        CommonRequest validatedCommonRequest = ThirdPartyPublicParamPlugin.validateCommonRequestParam(commonRequest);
+        ThirdPartyPublicParamPlugin.validateToken(methodParameter, commonRequest);
         // 入参为CommonRequestParam<T>对象，则重新组装为解密验签后的CommonRequestParam<T>
         if (ClassUtils.isAssignable(CommonRequest.class, methodParameter.getParameterType())) {
             return new HttpInputMessageWrapper(inputMessage.getHeaders(), new ByteArrayInputStream(JSON.toJSONString(validatedCommonRequest).getBytes()));

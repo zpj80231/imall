@@ -38,7 +38,7 @@ import java.util.Set;
  * @date 2022/7/13
  */
 @Slf4j
-@ControllerAdvice("com.dky.thirdparty")
+@ControllerAdvice
 public class ThirdPartyGlobalExceptionHandler {
 
     /**

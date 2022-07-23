@@ -1,7 +1,7 @@
 package com.imall.thirdparty.modules.controller;
 
 import com.imall.thirdparty.common.CommonRequest;
-import com.imall.thirdparty.utils.SignUtil;
+import com.imall.thirdparty.utils.ThirdPartyPublicParamSignUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +28,9 @@ public class SignController {
     @PostMapping("/requestWrapping")
     public CommonRequest requestWrapping(@RequestBody @Validated CommonRequest commonRequest) {
         log.info("commonRequest: {}", commonRequest);
-        String endodeData = SignUtil.encodeData(commonRequest.getData());
+        String endodeData = ThirdPartyPublicParamSignUtil.encodeData(commonRequest.getData());
         CommonRequest requestWrapping = new CommonRequest(commonRequest.getToken(), endodeData, commonRequest.getTs(), null);
-        String sign = SignUtil.createRequestSign(requestWrapping);
+        String sign = ThirdPartyPublicParamSignUtil.createRequestSign(requestWrapping);
         requestWrapping.setSign(sign);
         return requestWrapping;
     }

@@ -1,5 +1,6 @@
 package com.imall.thirdparty.utils;
 
+import cn.hutool.extra.spring.SpringUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Collection;

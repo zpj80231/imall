@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface DkyThirdPartyParam {
+public @interface ThirdPartyPublicParam {
 
     /**
      * token类型，用于校验token

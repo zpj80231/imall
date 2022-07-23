@@ -4,14 +4,14 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.UUID;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONValidator;
-import com.imall.thirdparty.annotations.DkyThirdPartyParam;
+import com.imall.thirdparty.annotations.ThirdPartyPublicParam;
 import com.imall.thirdparty.constants.RedisConstant;
 import com.imall.thirdparty.constants.ThirdPartyConstant;
 import com.imall.thirdparty.constants.TokenTypeEnum;
 import com.imall.thirdparty.exception.ApiCode;
 import com.imall.thirdparty.exception.ApiException;
 import com.imall.thirdparty.utils.RedisUtil;
-import com.imall.thirdparty.utils.SignUtil;
+import com.imall.thirdparty.utils.ThirdPartyPublicParamSignUtil;
 import com.imall.thirdparty.utils.ValidatorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -26,14 +26,15 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
- * token，私钥参数插件
+ * 公共参数插件
+ * 支持对token，私钥，时间戳，是否明文请求等参数的设置
  *
  * @author zhangpengjun
  * @date 2022/7/15
  */
 @Slf4j
 @Component
-public class TokenSignPlugin {
+public class ThirdPartyPublicParamPlugin {
 
     /**
      * 私钥
@@ -150,8 +151,8 @@ public class TokenSignPlugin {
      * @throws ApiException
      */
     public static void validateToken(MethodParameter methodParameter, CommonRequest commonRequest) throws ApiException {
-        DkyThirdPartyParam defaultAnnotation = AnnotationUtils.findAnnotation(methodParameter.getDeclaringClass(), DkyThirdPartyParam.class);
-        DkyThirdPartyParam methodAnnotation = AnnotationUtils.findAnnotation(methodParameter.getMethod(), DkyThirdPartyParam.class);
+        ThirdPartyPublicParam defaultAnnotation = AnnotationUtils.findAnnotation(methodParameter.getDeclaringClass(), ThirdPartyPublicParam.class);
+        ThirdPartyPublicParam methodAnnotation = AnnotationUtils.findAnnotation(methodParameter.getMethod(), ThirdPartyPublicParam.class);
         if (methodAnnotation != null) {
             defaultAnnotation = methodAnnotation;
         }
@@ -241,10 +242,10 @@ public class TokenSignPlugin {
             if (plaintext_request) {
                 commonResult = new CommonResult(code, message, data);
             } else {
-                String dataEncode = SignUtil.encodeData(data);
+                String dataEncode = ThirdPartyPublicParamSignUtil.encodeData(data);
                 commonResult = new CommonResult(code, message, dataEncode);
             }
-            String sign = SignUtil.createResponsetSign(commonResult);
+            String sign = ThirdPartyPublicParamSignUtil.createResponsetSign(commonResult);
             commonResult.setSign(sign);
             return commonResult;
         }
@@ -274,7 +275,7 @@ public class TokenSignPlugin {
         // 解密验签
         // 验签
         if (getIsCheckSign()) {
-            boolean verifyRequestSign = SignUtil.verifyRequestSign(commonRequest, commonRequest.getSign());
+            boolean verifyRequestSign = ThirdPartyPublicParamSignUtil.verifyRequestSign(commonRequest, commonRequest.getSign());
             if (!verifyRequestSign) {
                 throw new ApiException(ApiCode.INVALID_SIGN);
             }
@@ -284,7 +285,7 @@ public class TokenSignPlugin {
             String decodeDataToString = null;
             try {
                 String data = String.valueOf(commonRequest.getData());
-                decodeDataToString = SignUtil.decodeData(data);
+                decodeDataToString = ThirdPartyPublicParamSignUtil.decodeData(data);
             } catch (Exception e) {
                 throw new ApiException(ApiCode.REQUEST_PARAMETER_EXCEPTION, "data不是Base64编码字符串");
             }

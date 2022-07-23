@@ -9,10 +9,10 @@ import com.imall.thirdparty.common.DynamicTableNamePlugin;
 import com.imall.thirdparty.constants.DsName;
 import com.imall.thirdparty.modules.mapper.CdrMapper;
 import com.imall.thirdparty.modules.pojo.domain.Cdr;
-import com.imall.thirdparty.modules.pojo.dto.IncomingAndOutgoingCDRsDTO;
-import com.imall.thirdparty.modules.pojo.dto.IncomingMissedCallMessageBillDTO;
-import com.imall.thirdparty.modules.pojo.vo.IncomingAndOutgoingCDRsVO;
-import com.imall.thirdparty.modules.pojo.vo.IncomingMissedCallMessageBillVO;
+import com.imall.thirdparty.modules.pojo.dto.InOutCdrDTO;
+import com.imall.thirdparty.modules.pojo.dto.NoAnswerRecordCdrDTO;
+import com.imall.thirdparty.modules.pojo.vo.InOutCdrVO;
+import com.imall.thirdparty.modules.pojo.vo.NoAnswerRecordCdrVO;
 import com.imall.thirdparty.modules.service.CdrService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,14 +33,14 @@ public class CdrServiceImpl extends ServiceImpl<CdrMapper, Cdr>
         implements CdrService {
 
     @Override
-    public List<IncomingAndOutgoingCDRsDTO> getInOutCdr(String companyid, IncomingAndOutgoingCDRsVO data) {
+    public List<InOutCdrDTO> getInOutCdr(String companyid, InOutCdrVO data) {
         String tableName = getTableNameFromDate(data.getCalldate());
         DynamicTableNamePlugin.setTable(tableName);
         LambdaQueryWrapper<Cdr> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Cdr::getProjectId, companyid);
         List<Cdr> list = list(queryWrapper);
-        List<IncomingAndOutgoingCDRsDTO> collect = list.stream().map(o -> {
-            IncomingAndOutgoingCDRsDTO dto = new IncomingAndOutgoingCDRsDTO();
+        List<InOutCdrDTO> collect = list.stream().map(o -> {
+            InOutCdrDTO dto = new InOutCdrDTO();
             dto.setCalldate(o.getCalldate());
             dto.setCompanyid(o.getProjectId());
             dto.setPhone(o.getTelb());
@@ -58,14 +58,14 @@ public class CdrServiceImpl extends ServiceImpl<CdrMapper, Cdr>
     }
 
     @Override
-    public List<IncomingMissedCallMessageBillDTO> getNoAnswerRecordCdr(String companyid, IncomingMissedCallMessageBillVO data) {
+    public List<NoAnswerRecordCdrDTO> getNoAnswerRecordCdr(String companyid, NoAnswerRecordCdrVO data) {
         String tableName = getTableNameFromDate(data.getCalldate());
         DynamicTableNamePlugin.setTable(tableName);
         LambdaQueryWrapper<Cdr> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Cdr::getProjectId, companyid);
         List<Cdr> list = list(queryWrapper);
-        List<IncomingMissedCallMessageBillDTO> collect = list.stream().map(o -> {
-            IncomingMissedCallMessageBillDTO dto = new IncomingMissedCallMessageBillDTO();
+        List<NoAnswerRecordCdrDTO> collect = list.stream().map(o -> {
+            NoAnswerRecordCdrDTO dto = new NoAnswerRecordCdrDTO();
             dto.setCalldate(o.getCalldate());
             dto.setCompanyid(o.getProjectId());
             dto.setDuration(o.getDuration() + "");

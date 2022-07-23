@@ -61,6 +61,6 @@ public class CommonResult<T> {
     }
 
     private static <T> CommonResult<T> getResult(Integer code, String message, T data) {
-        return TokenSignPlugin.buildCommonResult(code, message, data);
+        return ThirdPartyPublicParamPlugin.buildCommonResult(code, message, data);
     }
 }

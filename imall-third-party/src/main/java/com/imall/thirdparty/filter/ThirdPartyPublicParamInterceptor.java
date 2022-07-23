@@ -1,6 +1,6 @@
 package com.imall.thirdparty.filter;
 
-import com.imall.thirdparty.common.TokenSignPlugin;
+import com.imall.thirdparty.common.ThirdPartyPublicParamPlugin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -16,12 +16,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 @Slf4j
-public class DkyThirdPartyParamInterceptor implements HandlerInterceptor {
+public class ThirdPartyPublicParamInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 查询corp_secret
-        TokenSignPlugin.setCorpSecret("123");
+        ThirdPartyPublicParamPlugin.setCorpSecret("123");
         // 支持不同客户不同交易请求包装
         // TokenSignPlugin.setIsPlaintextRequest(ThirdPartyConstant.plaintextRequest);
         return true;
@@ -29,8 +29,8 @@ public class DkyThirdPartyParamInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        TokenSignPlugin.removeCorpSecret();
-        TokenSignPlugin.removeIsPlaintextRequest();
+        ThirdPartyPublicParamPlugin.removeCorpSecret();
+        ThirdPartyPublicParamPlugin.removeIsPlaintextRequest();
     }
 }
 
