@@ -47,7 +47,7 @@ public class ThirdPartyGlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler({Throwable.class, Exception.class, RuntimeException.class})
     public ResponseEntity<CommonResult<Void>> handleThrowableException(Throwable e, HttpServletRequest request) {
-        // StrUtil.split(this.getHttpRequestInfo(request), StrUtil.CRLF).forEach(log::error);
+        StrUtil.split(this.getHttpRequestInfo(request), StrUtil.CRLF).forEach(log::error);
         return this.getResponseEntity(request, e, ApiCode.INTERNAL_ERROR);
     }
 
