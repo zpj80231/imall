@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * @author zhangpengjun
  * @date 2022/7/18
  */
-@ConfigurationProperties(prefix = "third-party")
+@ConfigurationProperties(prefix = "third-party.public-param")
 @Component
 public class ThirdPartyConstant {
 

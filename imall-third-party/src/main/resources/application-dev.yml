@@ -28,12 +28,12 @@ spring:
         min-idle: 0
 
 third-party:
-  checkToken: false
-  checkTimestamp: false
-  timestampLimit: 300
-  # 明文请求
-  plaintextRequest: true
-  checkSign: false
+  public-param:
+    check-token: false # 是否校验token
+    check-timestamp: false # 是否校验时间戳
+    timestamp-limit: 300 # 校验的时间戳时长，单位：秒
+    plaintext-request: true # 是否开启明文请求
+    check-sign: false # 是否校验sign
 
 # 启用Swagger
 swagger:
