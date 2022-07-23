@@ -23,6 +23,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -216,13 +217,13 @@ public class ThirdPartyPublicParamPlugin {
         String key = RedisConstant.TOKEN_PREFIX + companyId + ":" + tokenTypeEnum.getType();
         long endTime = DateUtil.endOfDay(new Date()).getTime();
         long startTime = DateUtil.beginOfDay(new Date()).getTime();
-        long expireTime = endTime - startTime;
+        long expireTime = (endTime - startTime) / 1000 + new Random().nextInt(300);
         try {
-            RedisUtil.set(key, token, expireTime, TimeUnit.MILLISECONDS);
+            RedisUtil.set(key, token, expireTime, TimeUnit.SECONDS);
         } catch (Exception e) {
             throw new ApiException(ApiCode.TOKEN_FAILED_TO_GET, e);
         }
-        log.info("createToken - key: {}, value: {}, expireTime: {}, timeUnit: {}", key, token, expireTime, TimeUnit.MILLISECONDS);
+        log.info("createToken - key: {}, value: {}, expireTime: {}, timeUnit: {}", key, token, expireTime, TimeUnit.SECONDS);
         return token;
     }
 

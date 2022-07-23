@@ -42,5 +42,7 @@ swagger:
 logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS
+  level:
+    com.imall.thirdparty: debug
 #  file:
 #    path: logs/
