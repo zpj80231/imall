@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: imall-notice
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  profiles:
+    active: dev
+
+server:
+  servlet:
+    context-path: /notice
+    encoding:
+      charset: utf-8

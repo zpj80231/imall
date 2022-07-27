@@ -45,6 +45,7 @@
         <module>imall-mbg</module>
         <module>imall-note</module>
         <module>imall-third-party</module>
+        <module>imall-notice</module>
     </modules>
 
     <dependencies>
