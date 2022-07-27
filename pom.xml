@@ -32,6 +32,7 @@
         <druid.version>1.2.11</druid.version>
         <mybatis-plus-starter.version>3.4.0</mybatis-plus-starter.version>
         <mybatis-plus-generator.version>3.4.0</mybatis-plus-generator.version>
+        <mybatis-plus-extension.version>3.4.0</mybatis-plus-extension.version>
         <velocity.version>2.2</velocity.version>
         <swagger.version>3.0.0</swagger.version>
         <knife4j.version>3.0.3</knife4j.version>
@@ -116,6 +117,11 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus-starter.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis-plus-extension.version}</version>
+            </dependency>
             <!-- mybatis-plus 代码生成-->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -131,12 +137,7 @@
             <!-- swagger -->
             <dependency>
                 <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
+                <artifactId>springfox-boot-starter</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
             <!-- knife4j，美化swagger -->

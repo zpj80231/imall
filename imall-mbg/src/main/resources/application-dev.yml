@@ -1,3 +1,6 @@
+server:
+  port: 8000
+
 spring:
   datasource:
     druid:
@@ -8,3 +11,5 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+swagger:
+  show: true

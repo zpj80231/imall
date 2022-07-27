@@ -1,9 +1,9 @@
-server:
-  port: 8080
-
 spring:
   application:
-    name: mbg-web
+    name: imall-mbg
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   profiles:
     active: dev
 
