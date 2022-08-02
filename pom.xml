@@ -30,9 +30,9 @@
         <spring-boot.version>2.7.0</spring-boot.version>
         <mysql-connector.version>8.0.16</mysql-connector.version>
         <druid.version>1.2.11</druid.version>
-        <mybatis-plus-starter.version>3.4.0</mybatis-plus-starter.version>
-        <mybatis-plus-generator.version>3.4.0</mybatis-plus-generator.version>
-        <mybatis-plus-extension.version>3.4.0</mybatis-plus-extension.version>
+        <mybatis-plus-starter.version>3.4.3.4</mybatis-plus-starter.version>
+        <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
+        <mybatis-plus-extension.version>3.4.3.4</mybatis-plus-extension.version>
         <velocity.version>2.2</velocity.version>
         <swagger.version>3.0.0</swagger.version>
         <knife4j.version>3.0.3</knife4j.version>
