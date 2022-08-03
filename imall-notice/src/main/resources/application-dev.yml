@@ -58,4 +58,4 @@ asterisk:
 
 logging:
   level:
-    com.dky: debug
+    com.imall: debug

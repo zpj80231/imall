@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * DkyThirdPartyParamInterceptor
+ * ThirdPartyPublicParamInterceptor
  *
  * @author zhangpengjun
  * @date 2022/7/12
