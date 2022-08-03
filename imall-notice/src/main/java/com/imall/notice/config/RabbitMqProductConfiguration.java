@@ -2,7 +2,10 @@ package com.imall.notice.config;
 
 import com.imall.notice.constant.MqConstant;
 import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.retry.MessageRecoverer;
@@ -23,13 +26,18 @@ public class RabbitMqProductConfiguration {
      * 1.声明注册 TopicExchange 模式的交换机
      */
     @Bean
-    public TopicExchange eventExchange() {
-        return new TopicExchange(MqConstant.Exchange.EVENT, true, false);
+    public TopicExchange thirdPartyExchange() {
+        return ExchangeBuilder.topicExchange(MqConstant.Exchange.ThirdParty).build();
     }
 
     @Bean
     public TopicExchange retryExchange() {
-        return new TopicExchange(MqConstant.Exchange.RETRY_EXCHANGE, true, false);
+        return new TopicExchange(MqConstant.Exchange.RetryFailureThirdParty, true, false);
+    }
+
+    @Bean
+    public TopicExchange deadThirdPartyExchange() {
+        return ExchangeBuilder.topicExchange(MqConstant.Exchange.DeadThirdParty).build();
     }
 
     /**
@@ -42,7 +50,15 @@ public class RabbitMqProductConfiguration {
         map.put("x-max-priority", 10);
         // 设置队列未被消费的消息过期时间，20秒过期
         map.put("x-message-ttl", 20 * 1000);
-        return new Queue(MqConstant.Queue.HangupEvent, true);
+        return QueueBuilder.durable(MqConstant.Queue.HangupEvent)
+                .deadLetterExchange(MqConstant.Exchange.DeadThirdParty)
+                .deadLetterRoutingKey(MqConstant.RoutingKey.DeadThirdParty)
+                .build();
+    }
+
+    @Bean
+    public Queue deadThirdPartytQueue() {
+        return QueueBuilder.durable(MqConstant.Queue.DeadThirdParty).build();
     }
 
     /**
@@ -50,15 +66,21 @@ public class RabbitMqProductConfiguration {
      */
     @Bean
     public Binding hangupEventBingding() {
-        return new Binding(MqConstant.Queue.HangupEvent, Binding.DestinationType.QUEUE,
-                MqConstant.Exchange.EVENT, MqConstant.RoutingKey.HangupEvent, null);
+        return BindingBuilder.bind(hangupEventQueue()).to(thirdPartyExchange()).with(MqConstant.RoutingKey.HangupEvent);
     }
 
-
     @Bean
+    public Binding deadThirdPartytBingding() {
+        return BindingBuilder.bind(deadThirdPartytQueue()).to(deadThirdPartyExchange()).with(MqConstant.RoutingKey.DeadThirdParty);
+    }
+
+    /**
+     * 重试失败交给死信队列处理
+     */
+    // @Bean
     public MessageRecoverer messageRecoverer(RabbitTemplate rabbitTemplate) {
         // 需要配置交换机和绑定键
-        return new RepublishMessageRecoverer(rabbitTemplate, MqConstant.Exchange.RETRY_EXCHANGE, MqConstant.RoutingKey.RETRY_FAILURE_KEY);
+        return new RepublishMessageRecoverer(rabbitTemplate, MqConstant.Exchange.RetryFailureThirdParty, MqConstant.RoutingKey.RetryFailureThirdParty);
     }
 
 }

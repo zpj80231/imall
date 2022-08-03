@@ -20,9 +20,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RabbitListener(bindings = @QueueBinding(
-        value = @Queue(value = MqConstant.Queue.RETRY_FAILURE_QUEUE, durable = "true", autoDelete = "false"),
-        exchange = @Exchange(value = MqConstant.Exchange.RETRY_EXCHANGE, type = ExchangeTypes.TOPIC),
-        key = MqConstant.RoutingKey.RETRY_FAILURE_KEY
+        value = @Queue(value = MqConstant.Queue.RetryFailureThirdParty, durable = "true", autoDelete = "false"),
+        exchange = @Exchange(value = MqConstant.Exchange.RetryFailureThirdParty, type = ExchangeTypes.TOPIC),
+        key = MqConstant.RoutingKey.RetryFailureThirdParty
 ))
 @Slf4j
 public class RetryFailureConsumer {

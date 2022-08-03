@@ -37,7 +37,7 @@ spring:
         # 消费者自动启动
         auto-startup: false
         retry:
-          enabled: true
+          enabled: true # 开启重试
           max-attempts: 5 # 重试次数
           max-interval: 10000   # 重试最大间隔时间ms
           initial-interval: 3000  # 重试初始间隔时间ms

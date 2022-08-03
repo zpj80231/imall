@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RabbitListener(bindings = @QueueBinding(
         value = @Queue(value = MqConstant.Queue.MusicOnHoldStartEvent, durable = "true", autoDelete = "false"),
-        exchange = @Exchange(value = MqConstant.Exchange.EVENT, type = ExchangeTypes.TOPIC),
+        exchange = @Exchange(value = MqConstant.Exchange.ThirdParty, type = ExchangeTypes.TOPIC),
         key = MqConstant.RoutingKey.MusicOnHoldStartEvent
 ))
 @Slf4j
