@@ -1,0 +1,45 @@
+server:
+  port: 7200
+
+spring:
+  datasource:
+    dynamic:
+      primary: config
+      datasource:
+        config:
+          url: jdbc:mysql://127.0.0.1:3306/config?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false
+          username: root
+          password: root@1234
+        asteriskcdrdb:
+          url: jdbc:mysql://127.0.0.1:3306/asteriskcdrdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false
+          username: root
+          password: root
+
+# 启用Swagger
+swagger:
+  show: true
+
+imall:
+  task:
+    pushMaximumRetries: 3 # 最大重试次数
+
+xxl:
+  job:
+    admin:
+      addresses: http://127.0.0.1:7100/imall-task-admin
+    accessToken: default_token
+    executor:
+      appname: imall-task
+      address:
+      ip:
+      port: 7300
+      logpath: logs/imall-task
+      logretentiondays: 30
+
+logging:
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
+  level:
+    com.imall: debug
+#  file:
+#    path: logs/imall-task

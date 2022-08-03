@@ -47,6 +47,7 @@
         <module>imall-note</module>
         <module>imall-third-party</module>
         <module>imall-notice</module>
+        <module>imall-task</module>
     </modules>
 
     <dependencies>
