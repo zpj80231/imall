@@ -7,11 +7,11 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @ClassName CommonPage
- * @Description MyBatis Plus分页数据封装
- * @Version 1.0
- * @Date 2020/9/30 16:41
- * @Created by zpj80231
+ * @author zhangpengjun
+ * @version 1.0
+ * @className CommonPage
+ * @description MyBatis Plus分页数据封装
+ * @date 2020/9/30
  */
 @Data
 public class CommonPage<T> {

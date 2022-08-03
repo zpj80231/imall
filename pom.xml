@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <name>imall</name>
-    <description>imall project for zpj80231</description>
+    <description>imall project</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

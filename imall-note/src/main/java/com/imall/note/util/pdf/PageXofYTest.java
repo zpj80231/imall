@@ -3,13 +3,17 @@ package com.imall.note.util.pdf;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.ExceptionConverter;
-import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
+import com.itextpdf.text.pdf.PdfTemplate;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by admin on 2020/3/5.
+ * @author zhangpengjun
  */ //页码事件
 class PageXofYTest extends PdfPageEventHelper {
     public PdfTemplate total;

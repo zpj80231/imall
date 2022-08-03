@@ -1,11 +1,11 @@
 package com.imall.common.api;
 
 /**
+ * @author zhangpengjun
+ * @version 1.0
  * @EnumName ResultCode
- * @Description 常用状态码枚举类
- * @Version 1.0
- * @Date 2020/9/24 15:25
- * @Created by zpj80231
+ * @description 常用状态码枚举类
+ * @date 2020/9/24
  */
 public enum ResultCode implements IResultCode {
 

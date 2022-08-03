@@ -1,7 +1,7 @@
 package com.imall.note.SourceCodeAnalysis;
 
 /**
- * Created by admin on 2019/8/10.
+ * @author zhangpengjun
  */
 public class MyArrayList {
 

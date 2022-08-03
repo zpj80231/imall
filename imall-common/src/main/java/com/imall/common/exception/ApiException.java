@@ -4,10 +4,12 @@ import com.imall.common.api.IResultCode;
 
 /**
  * 自定义异常类
- * Created by zpj80231 on 2020/9/30.
+ *
+ * @author zhangpengjun
  */
 public class ApiException extends RuntimeException {
 
+    private static final long serialVersionUID = -418250791972825895L;
     private IResultCode errorResult;
 
     public IResultCode getErrorResult() {

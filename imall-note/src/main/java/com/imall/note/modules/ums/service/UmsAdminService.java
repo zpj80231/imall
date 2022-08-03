@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *  后台用户表 服务类
  * </p>
  *
- * @author zpj80231
- * @since 2022-04-01
+ * @author zhangpengjun
+ * @date 2022-04-01
  */
 public interface UmsAdminService extends IService<UmsAdmin> {
 

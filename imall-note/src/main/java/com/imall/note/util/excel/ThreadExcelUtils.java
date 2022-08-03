@@ -13,7 +13,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -62,7 +66,7 @@ public class ThreadExcelUtils {
      * @param hearders 文件头
      * @param fields   字段属性
      * @Author maochuang.li
-     * @Date Create in 13:54 2017/12/28 0028
+     * @date 2017/12/28
      */
     public ThreadExcelUtils(String fileName, String filePath, String[] hearders, String[] fields) {
         this.wb = new SXSSFWorkbook(10000);
@@ -97,7 +101,7 @@ public class ThreadExcelUtils {
     /**
      * @param list 数据
      * @Author maochuang.li
-     * @Date Create in 10:52 2017/12/28 0028
+     * @date 2017/12/28
      */
     public void exportExcelToFilePath(List<Object> list) throws Exception {
         int excelSize = EXCEL_MAX_CNT;    //每个Excel文件条数
@@ -197,7 +201,7 @@ public class ThreadExcelUtils {
          * @param totalSheetCount 总sheet页
          * @param numPage         是否整数
          * @Author maochuang.li
-         * @Date Create in 11:12 2017/12/28 0028
+         * @date 2017/12/28
          */
         public ThraedExcel(List<Object> list, Integer sheetNumber, Integer totalSheetCount, Integer numPage, ThreadExcelUtils threadExcelUtils) {
             this.list = list;//总数据

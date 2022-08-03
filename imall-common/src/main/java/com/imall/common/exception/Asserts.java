@@ -4,7 +4,7 @@ import com.imall.common.api.IResultCode;
 
 /**
  * 断言处理，用于抛出各种自定义API异常
- * Created by zpj80231 on 2020/9/30.
+ * @author zhangpengjun
  */
 public class Asserts {
 

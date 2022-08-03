@@ -16,10 +16,10 @@ import org.springframework.util.Assert;
 import java.util.List;
 
 /**
- * @ClassName MybatisPlusCRUDTest
- * @Version 1.0
- * @Date 2020/9/30 9:57
- * @Created by zpj80231
+ * @author zhangpengjun
+ * @version 1.0
+ * @className MybatisPlusCRUDTest
+ * @date 2020/9/30
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest

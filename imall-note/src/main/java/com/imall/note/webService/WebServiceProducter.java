@@ -5,7 +5,7 @@ import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
 
 /**
- * Created by admin on 2020/2/28.
+ * @author zhangpengjun
  */
 public class WebServiceProducter {
 

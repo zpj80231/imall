@@ -16,8 +16,8 @@ import java.util.Date;
  *  后台用户表
  * </p>
  *
- * @author zpj80231
- * @since 2022-04-01
+ * @author zhangpengjun
+ * @date 2022-04-01
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

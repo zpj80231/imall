@@ -3,11 +3,11 @@ package com.imall.note.aop;
 import org.aspectj.lang.annotation.Aspect;
 
 /**
- * @Classname RequestRecordAop
- * @Description TODO
- * @Version 1.0
- * @Date 2020/5/28 10:41
- * @Created by zpj
+ * @author zpj
+ * @version 1.0
+ * @className RequestRecordAop
+ * @description TODO
+ * @date 2020/5/28
  */
 @Aspect
 public class RequestRecordAop {

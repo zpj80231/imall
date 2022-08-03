@@ -1,7 +1,10 @@
 package com.imall.note.SourceCodeAnalysis;
 
 import java.text.SimpleDateFormat;
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @className: com.zpj.electric.SourceCodeAnalysis.TestThreadPool
@@ -129,6 +132,7 @@ class Cat implements Runnable {
 
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    @Override
     public void run() {
         System.out.println("Thread:"+Thread.currentThread().getName()+" 开始执行时间："+format.format(System.currentTimeMillis()));
 

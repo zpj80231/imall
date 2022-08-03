@@ -1,7 +1,7 @@
 package com.imall.note.test;
 
 /**
- * Created by admin on 2019/8/15.
+ * @author zhangpengjun
  */
 public class DeadLockTest {
 

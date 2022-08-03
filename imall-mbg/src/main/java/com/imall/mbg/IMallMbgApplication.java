@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * IMallMbgApplication
  *
- * @author by zpj80231
- * @Date 2020/9/29 20:51
+ * @author zhangpengjun
+ * @date 2020/9/29
  */
 @SpringBootApplication(scanBasePackages = "com.imall")
 public class IMallMbgApplication {

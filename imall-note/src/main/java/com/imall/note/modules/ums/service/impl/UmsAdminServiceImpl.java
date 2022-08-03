@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  *  后台用户表 服务实现类
  * </p>
  *
- * @author zpj80231
- * @since 2022-04-01
+ * @author zhangpengjun
+ * @date 2022-04-01
  */
 @Service
 public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdmin> implements UmsAdminService {

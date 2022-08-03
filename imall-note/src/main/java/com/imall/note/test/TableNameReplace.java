@@ -1,15 +1,20 @@
 package com.imall.note.test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.CharArrayWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Classname TableNameReplace
- * @Description 对所有符合格式的sql文件，批量修改表名
- * @Date 2020-04-30
  * @author zpj
+ * @className TableNameReplace
+ * @description 对所有符合格式的sql文件，批量修改表名
+ * @date 2020/04/30
  */
 public class TableNameReplace {
 

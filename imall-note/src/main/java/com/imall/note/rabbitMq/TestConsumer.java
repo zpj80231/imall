@@ -3,7 +3,7 @@ package com.imall.note.rabbitMq;
 import java.io.IOException;
 
 /**
- * Created by admin on 2019/12/2.
+ * @author zhangpengjun
  */
 public class TestConsumer {
     public static void main(String[] args) throws IOException {

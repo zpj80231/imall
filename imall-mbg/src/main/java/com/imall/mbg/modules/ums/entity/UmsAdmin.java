@@ -1,22 +1,23 @@
 package com.imall.mbg.modules.ums.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  * <p>
- *  后台用户表
+ * 后台用户表
  * </p>
  *
- * @author zpj80231
- * @since 2020-09-29
+ * @author zhangpengjun
+ * @date 2020-09-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

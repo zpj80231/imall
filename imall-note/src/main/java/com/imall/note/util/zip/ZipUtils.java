@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Classname ZipUtils
- * @Description TODO
- * @Version 1.0
- * @Date 2020/7/13 11:46
- * @Created by zpj
+ * @author zpj
+ * @version 1.0
+ * @className ZipUtils
+ * @description TODO
+ * @date 2020/7/13
  */
 public class ZipUtils {
     /**

@@ -12,11 +12,11 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @ClassName Swagger2Config
- * @Description 采用 knife4j 美化swagger
- * @Version 1.0
- * @Date 2020/9/29 22:59
- * @Created by zpj80231
+ * @author zhangpengjun
+ * @version 1.0
+ * @className Swagger2Config
+ * @description 采用 knife4j 美化swagger
+ * @date 2020/9/29
  */
 @EnableSwagger2
 @Configuration

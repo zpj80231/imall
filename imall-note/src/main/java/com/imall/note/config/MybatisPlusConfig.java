@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @ClassName MybatisPlusConfig
- * @Description MyBatis Plus 配置类
- * @Version 1.0
- * @Date 2020/9/29 22:47
- * @Created by zpj80231
+ * @author zhangpengjun
+ * @version 1.0
+ * @className MybatisPlusConfig
+ * @description MyBatis Plus 配置类
+ * @date 2020/9/29
  */
 @MapperScan({"com.imall.note.modules.*.mapper"})
 @Configuration

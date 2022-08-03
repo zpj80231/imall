@@ -1,6 +1,10 @@
 package com.imall.note.util.pdf;
 
-import com.itextpdf.text.*;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPageEventHelper;
@@ -10,7 +14,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 /**
- * Created by admin on 2020/3/5.
+ * @author zhangpengjun
  */ //页脚事件
 class Footer extends PdfPageEventHelper {
     public static PdfPTable footer;
