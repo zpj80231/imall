@@ -47,7 +47,7 @@ public class ThirdPartyGlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler({Throwable.class, Exception.class, RuntimeException.class})
-    public ResponseEntity<CommonResult<Void>> handleThrowableException(Throwable e, HttpServletRequest request) {
+    public ResponseEntity handleThrowableException(Throwable e, HttpServletRequest request) {
         // StrUtil.split(this.getHttpRequestInfo(request), StrUtil.CRLF).forEach(log::error);
         return this.getResponseEntity(request, e, ApiCode.INTERNAL_ERROR);
     }
@@ -57,7 +57,7 @@ public class ThirdPartyGlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler({HttpMessageNotReadableException.class})
-    public ResponseEntity<CommonResult<Object>> handleBusinessException(HttpMessageNotReadableException e, HttpServletRequest request) {
+    public ResponseEntity handleBusinessException(HttpMessageNotReadableException e, HttpServletRequest request) {
         return this.getResponseEntity(request, e, ApiCode.FAIL.getCode(), "请求不能为空", null);
     }
 
@@ -66,7 +66,7 @@ public class ThirdPartyGlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler({ApiException.class})
-    public ResponseEntity<CommonResult<Object>> handleBusinessException(ApiException e, HttpServletRequest request) {
+    public ResponseEntity handleBusinessException(ApiException e, HttpServletRequest request) {
         return this.getResponseEntity(request, e, e.getCode(), e.getMessage(), e.getData());
     }
 
@@ -75,8 +75,8 @@ public class ThirdPartyGlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<CommonResult<Void>> handleHttpRequestMethodNotSupportedException(
-        HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
+    public ResponseEntity handleHttpRequestMethodNotSupportedException(
+            HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
         return this.getResponseEntity(request, e);
     }
 
@@ -85,12 +85,12 @@ public class ThirdPartyGlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler({ConstraintViolationException.class})
-    public ResponseEntity<CommonResult<Void>> handlerValidationException(ConstraintViolationException e,
-        HttpServletRequest request) {
+    public ResponseEntity handlerValidationException(ConstraintViolationException e,
+                                                     HttpServletRequest request) {
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         StringBuilder sb = new StringBuilder();
         constraintViolations.forEach(constraintViolation -> sb.append(constraintViolation.getPropertyPath()).append(" ")
-            .append(constraintViolation.getMessage()).append(" "));
+                .append(constraintViolation.getMessage()).append(" "));
         log.warn("请求参数异常 {}", sb);
         return this.getResponseEntity(request, e, ApiCode.REQUEST_PARAMETER_EXCEPTION);
     }
@@ -100,8 +100,8 @@ public class ThirdPartyGlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler(value = {IllegalStateException.class})
-    public ResponseEntity<CommonResult<Void>> handlerIllegalStateException(IllegalStateException e,
-        HttpServletRequest request) {
+    public ResponseEntity handlerIllegalStateException(IllegalStateException e,
+                                                       HttpServletRequest request) {
         log.warn("请求参数异常 {} ", e.getLocalizedMessage());
         return this.getResponseEntity(request, e, ApiCode.REQUEST_PARAMETER_EXCEPTION);
     }
@@ -111,7 +111,7 @@ public class ThirdPartyGlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler({TypeMismatchException.class})
-    public ResponseEntity<CommonResult<Void>> requestTypeMismatch(TypeMismatchException e, HttpServletRequest request) {
+    public ResponseEntity requestTypeMismatch(TypeMismatchException e, HttpServletRequest request) {
         log.warn("参数类型不匹配 参数:{} 类型应该为{}", e.getPropertyName(), e.getRequiredType());
         return this.getResponseEntity(request, e, ApiCode.REQUEST_PARAMETER_EXCEPTION);
     }
@@ -121,31 +121,30 @@ public class ThirdPartyGlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler(value = {BindException.class})
-    public ResponseEntity<CommonResult<Void>> handlerBindException(BindException e, HttpServletRequest request) {
+    public ResponseEntity handlerBindException(BindException e, HttpServletRequest request) {
         BindingResult bindingResult = e.getBindingResult();
         StringBuilder sb = new StringBuilder();
         bindingResult.getAllErrors().stream().filter(allError -> allError instanceof FieldError)
-            .map(allError -> (FieldError)allError).forEach(fieldError -> {
-                String field = fieldError.getField();
-                String message = fieldError.getDefaultMessage();
-                sb.append(String.format("参数:%s 值:%s 错误信息:%s ", field, fieldError.getRejectedValue(), message));
-            });
+                .map(allError -> (FieldError) allError).forEach(fieldError -> {
+            String field = fieldError.getField();
+            String message = fieldError.getDefaultMessage();
+            sb.append(String.format("%s: %s message:%s ", field, fieldError.getRejectedValue(), message));
+        });
         log.warn("请求参数异常 {}", sb);
         return this.getResponseEntity(request, e, ApiCode.REQUEST_PARAMETER_EXCEPTION.getCode(), sb.toString(), null);
     }
 
-    protected <T> ResponseEntity<CommonResult<T>> getResponseEntity(HttpServletRequest request, Throwable e) {
+    protected ResponseEntity getResponseEntity(HttpServletRequest request, Throwable e) {
         return this.getResponseEntity(request, e, ApiCode.REQUEST_TYPE_MISMATCH);
     }
 
-    protected <T> ResponseEntity<CommonResult<T>> getResponseEntity(HttpServletRequest request, Throwable e, ApiCode apiCode) {
-        log.error(e.getMessage(), e);
+    protected ResponseEntity getResponseEntity(HttpServletRequest request, Throwable e, ApiCode apiCode) {
         return this.getResponseEntity(request, e, apiCode.getCode(), apiCode.getMessage(), null);
     }
 
-    protected <T> ResponseEntity<CommonResult<T>> getResponseEntity(HttpServletRequest request, Throwable e, int code, String msg, T data) {
+    protected <T> ResponseEntity getResponseEntity(HttpServletRequest request, Throwable e, int code, String msg, T data) {
         log.error(e.getMessage(), e);
-        CommonResult<T> commonResult = new CommonResult<>(code, msg, data);
+        CommonResult<T> commonResult = CommonResult.fail(code, msg, data);
         ThirdPartyPublicParamPlugin.removeAll();
         return new ResponseEntity<>(commonResult, HttpStatus.OK);
     }

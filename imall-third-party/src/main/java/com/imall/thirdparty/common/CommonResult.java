@@ -41,13 +41,6 @@ public class CommonResult<T> {
      */
     private String sign;
 
-    public CommonResult(Integer code, String message, T data) {
-        this.code = code;
-        this.message = message;
-        this.data = data;
-        this.ts = System.currentTimeMillis() / 1000;
-    }
-
     public static <T> CommonResult<T> success(ApiCode apiCode, T data) {
         return getResult(apiCode.getCode(), apiCode.getMessage(), data);
     }
@@ -58,6 +51,10 @@ public class CommonResult<T> {
 
     public static <T> CommonResult<T> fail(ApiCode apiCode, String message) {
         return getResult(apiCode.getCode(), message, null);
+    }
+
+    public static <T> CommonResult<T> fail(Integer code, String message, T data) {
+        return getResult(code, message, data);
     }
 
     private static <T> CommonResult<T> getResult(Integer code, String message, T data) {

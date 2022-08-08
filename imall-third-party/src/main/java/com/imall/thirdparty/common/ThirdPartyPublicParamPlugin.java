@@ -29,6 +29,9 @@ import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import static com.imall.thirdparty.utils.ThirdPartyPublicParamSignUtil.createResponsetSign;
+import static com.imall.thirdparty.utils.ThirdPartyPublicParamSignUtil.encodeData;
+
 /**
  * 公共参数插件
  * 支持对token，私钥，时间戳，是否明文请求等参数的设置
@@ -244,12 +247,12 @@ public class ThirdPartyPublicParamPlugin {
             Boolean plaintext_request = getIsPlaintextRequest();
             CommonResult<T> commonResult;
             if (plaintext_request) {
-                commonResult = new CommonResult(code, message, data);
+                commonResult = new CommonResult(code, message, data, System.currentTimeMillis() / 1000, null);
             } else {
-                String dataEncode = ThirdPartyPublicParamSignUtil.encodeData(data);
-                commonResult = new CommonResult(code, message, dataEncode);
+                String dataEncode = encodeData(data);
+                commonResult = new CommonResult(code, message, dataEncode, System.currentTimeMillis() / 1000, null);
             }
-            String sign = ThirdPartyPublicParamSignUtil.createResponsetSign(commonResult);
+            String sign = createResponsetSign(commonResult);
             commonResult.setSign(sign);
             return commonResult;
         }
