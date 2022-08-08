@@ -2,6 +2,7 @@ package com.imall.thirdparty.common;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.crypto.SecureUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONValidator;
 import com.imall.thirdparty.annotations.ThirdPartyPublicParam;
@@ -21,7 +22,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -304,4 +307,15 @@ public class ThirdPartyPublicParamPlugin {
         }
         return commonRequest;
     }
+
+    /**
+     * 生成AES密钥
+     */
+    public static synchronized String generateKeyAES() {
+        SecretKey secretKey = SecureUtil.generateKey("AES");
+        String corpSecret = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+        log.info("generateKeyAES corpSecret: {}", corpSecret);
+        return corpSecret;
+    }
+
 }
