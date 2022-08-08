@@ -20,7 +20,6 @@ public enum ApiCode {
     INVALID_SIGN(9, "无效sign"),
     DATA_PARAMETER_IS_INCOMPLETE(10, "data参数不完整"),
     DATA_IS_MISSING_REQUIRED_KEY(11, "data缺少必填"),
-    INTERNAL_ERROR(12, "内部错误或data无效"),
     INVALID_AGENT(13, "无效坐席"),
     INVALID_JSON(14, "无效json"),
     NO_NUMBERS_AVAILABLE_YET(15, "暂无可用号码"),
@@ -28,10 +27,11 @@ public enum ApiCode {
     INVALID_GATEWAY(17, "无效网关"),
     REQUEST_TYPE_MISMATCH(18, "请求类型不匹配"),
     REQUEST_PARAMETER_EXCEPTION(19, "请求参数异常"),
+    INTERNAL_ERROR(9999, "系统繁忙，请稍后重试"),
     ;
 
-    Integer code;
-    String message;
+    private Integer code;
+    private String message;
 
     public Integer getCode() {
         return code;

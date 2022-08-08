@@ -3,6 +3,7 @@ package com.imall.thirdparty.support;
 import com.alibaba.fastjson.JSON;
 import com.imall.thirdparty.annotations.ThirdPartyPublicParam;
 import com.imall.thirdparty.common.CommonResult;
+import com.imall.thirdparty.common.ThirdPartyPublicParamPlugin;
 import com.imall.thirdparty.exception.ApiCode;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -41,11 +42,10 @@ public class ThirdPartyResponseAdvice implements ResponseBodyAdvice<Object> {
                                   @Nonnull Class<? extends HttpMessageConverter<?>> aClass, @Nonnull ServerHttpRequest serverHttpRequest,
                                   @Nonnull ServerHttpResponse serverHttpResponse) {
         CommonResult commonResult = CommonResult.success(ApiCode.SUCCESS, body);
-        if (body == null) {
-            commonResult = CommonResult.success(ApiCode.INTERNAL_ERROR, body);
-        } else if (body instanceof CommonResult) {
+        if (body instanceof CommonResult) {
             commonResult = (CommonResult) body;
         }
+        ThirdPartyPublicParamPlugin.removeAll();
         log.info("original response body：{}", JSON.toJSONString(commonResult));
         return commonResult;
     }

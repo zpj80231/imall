@@ -138,14 +138,14 @@ public class ThirdPartyPublicParamPlugin {
         isCheckToken.remove();
     }
 
-    // @PostConstruct
-    // private static void init() {
-    //     isCheckToken.set(ThirdPartyConstant.checkSign);
-    //     isCheckTimestamp.set(ThirdPartyConstant.checkTimestamp);
-    //     timestampLimit.set(ThirdPartyConstant.timestampLimit);
-    //     isCheckSign.set(ThirdPartyConstant.checkSign);
-    //     isPlaintextRequest.set(ThirdPartyConstant.plaintextRequest);
-    // }
+    public static void removeAll() {
+        corpSecret.remove();
+        isCheckToken.remove();
+        isCheckTimestamp.remove();
+        timestampLimit.remove();
+        isCheckSign.remove();
+        isPlaintextRequest.remove();
+    }
 
     /**
      * 自动校验

@@ -2,9 +2,10 @@ package com.imall.thirdparty.exception;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.imall.thirdparty.common.CommonResult;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
+import com.imall.thirdparty.common.CommonResult;
+import com.imall.thirdparty.common.ThirdPartyPublicParamPlugin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class ThirdPartyGlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler({Throwable.class, Exception.class, RuntimeException.class})
     public ResponseEntity<CommonResult<Void>> handleThrowableException(Throwable e, HttpServletRequest request) {
-        StrUtil.split(this.getHttpRequestInfo(request), StrUtil.CRLF).forEach(log::error);
+        // StrUtil.split(this.getHttpRequestInfo(request), StrUtil.CRLF).forEach(log::error);
         return this.getResponseEntity(request, e, ApiCode.INTERNAL_ERROR);
     }
 
@@ -137,17 +138,15 @@ public class ThirdPartyGlobalExceptionHandler {
         return this.getResponseEntity(request, e, ApiCode.REQUEST_TYPE_MISMATCH);
     }
 
-    protected <T> ResponseEntity<CommonResult<T>> getResponseEntity(HttpServletRequest request, Throwable e,
-                                                                ApiCode ApiCode) {
+    protected <T> ResponseEntity<CommonResult<T>> getResponseEntity(HttpServletRequest request, Throwable e, ApiCode apiCode) {
         log.error(e.getMessage(), e);
-        CommonResult<T> commonResult = CommonResult.fail(ApiCode, e.getMessage());
-        return new ResponseEntity<>(commonResult, HttpStatus.OK);
+        return this.getResponseEntity(request, e, apiCode.getCode(), apiCode.getMessage(), null);
     }
 
-    protected <T> ResponseEntity<CommonResult<T>> getResponseEntity(HttpServletRequest request, Throwable e, int code,
-                                                                    String msg, T data) {
+    protected <T> ResponseEntity<CommonResult<T>> getResponseEntity(HttpServletRequest request, Throwable e, int code, String msg, T data) {
         log.error(e.getMessage(), e);
         CommonResult<T> commonResult = new CommonResult<>(code, msg, data);
+        ThirdPartyPublicParamPlugin.removeAll();
         return new ResponseEntity<>(commonResult, HttpStatus.OK);
     }
 
