@@ -11,6 +11,7 @@ import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -40,12 +41,12 @@ import java.util.Set;
  */
 @Slf4j
 @ControllerAdvice
+@ResponseBody
 public class ThirdPartyGlobalExceptionHandler {
 
     /**
      * 处理所有不可知的异常
      */
-    @ResponseBody
     @ExceptionHandler({Throwable.class, Exception.class, RuntimeException.class})
     public ResponseEntity handleThrowableException(Throwable e, HttpServletRequest request) {
         // StrUtil.split(this.getHttpRequestInfo(request), StrUtil.CRLF).forEach(log::error);
@@ -55,7 +56,6 @@ public class ThirdPartyGlobalExceptionHandler {
     /**
      * HttpMessageNotReadableException 业务异常
      */
-    @ResponseBody
     @ExceptionHandler({HttpMessageNotReadableException.class})
     public ResponseEntity handleBusinessException(HttpMessageNotReadableException e, HttpServletRequest request) {
         return this.getResponseEntity(request, e, ApiCode.FAIL.getCode(), "请求不能为空", null);
@@ -64,7 +64,6 @@ public class ThirdPartyGlobalExceptionHandler {
     /**
      * ApiException 业务异常
      */
-    @ResponseBody
     @ExceptionHandler({ApiException.class})
     public ResponseEntity handleBusinessException(ApiException e, HttpServletRequest request) {
         return this.getResponseEntity(request, e, e.getCode(), e.getMessage(), e.getData());
@@ -73,7 +72,6 @@ public class ThirdPartyGlobalExceptionHandler {
     /**
      * 请求类型不匹配
      */
-    @ResponseBody
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity handleHttpRequestMethodNotSupportedException(
             HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
@@ -83,7 +81,6 @@ public class ThirdPartyGlobalExceptionHandler {
     /**
      * 参数异常
      */
-    @ResponseBody
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity handlerValidationException(ConstraintViolationException e,
                                                      HttpServletRequest request) {
@@ -98,10 +95,8 @@ public class ThirdPartyGlobalExceptionHandler {
     /**
      * 参数异常
      */
-    @ResponseBody
     @ExceptionHandler(value = {IllegalStateException.class})
-    public ResponseEntity handlerIllegalStateException(IllegalStateException e,
-                                                       HttpServletRequest request) {
+    public ResponseEntity handlerIllegalStateException(IllegalStateException e, HttpServletRequest request) {
         log.warn("请求参数异常 {} ", e.getLocalizedMessage());
         return this.getResponseEntity(request, e, ApiCode.REQUEST_PARAMETER_EXCEPTION);
     }
@@ -109,7 +104,7 @@ public class ThirdPartyGlobalExceptionHandler {
     /**
      * 参数类型不匹配
      */
-    @ResponseBody
+
     @ExceptionHandler({TypeMismatchException.class})
     public ResponseEntity requestTypeMismatch(TypeMismatchException e, HttpServletRequest request) {
         log.warn("参数类型不匹配 参数:{} 类型应该为{}", e.getPropertyName(), e.getRequiredType());
@@ -119,7 +114,6 @@ public class ThirdPartyGlobalExceptionHandler {
     /**
      * 参数异常
      */
-    @ResponseBody
     @ExceptionHandler(value = {BindException.class})
     public ResponseEntity handlerBindException(BindException e, HttpServletRequest request) {
         BindingResult bindingResult = e.getBindingResult();
@@ -128,7 +122,7 @@ public class ThirdPartyGlobalExceptionHandler {
                 .map(allError -> (FieldError) allError).forEach(fieldError -> {
             String field = fieldError.getField();
             String message = fieldError.getDefaultMessage();
-            sb.append(String.format("%s: %s message:%s ", field, fieldError.getRejectedValue(), message));
+            sb.append(String.format("%s: %s, message:%s ", field, fieldError.getRejectedValue(), message));
         });
         log.warn("请求参数异常 {}", sb);
         return this.getResponseEntity(request, e, ApiCode.REQUEST_PARAMETER_EXCEPTION.getCode(), sb.toString(), null);
@@ -142,11 +136,44 @@ public class ThirdPartyGlobalExceptionHandler {
         return this.getResponseEntity(request, e, apiCode.getCode(), apiCode.getMessage(), null);
     }
 
+    /**
+     * 构造通用返回信息
+     */
     protected <T> ResponseEntity getResponseEntity(HttpServletRequest request, Throwable e, int code, String msg, T data) {
-        log.error(e.getMessage(), e);
+        if (oneOfByInstanceOf(e.getClass(), ApiException.class, BindException.class)) {
+            String packageStackTrace = getPackageStackTrace(e, "com.imall");
+            log.error("业务异常：{}", packageStackTrace);
+        } else {
+            log.error("系统异常：{}{}", e.getMessage(), e);
+        }
         CommonResult<T> commonResult = CommonResult.fail(code, msg, data);
         ThirdPartyPublicParamPlugin.removeAll();
         return new ResponseEntity<>(commonResult, HttpStatus.OK);
+    }
+
+    /**
+     * 所属类是否为指定类型之一
+     */
+    private static boolean oneOfByInstanceOf(Class<?> cls, Class<?>... objs) {
+        for (Class<?> obj : objs) {
+            if (ClassUtils.isAssignable(obj, cls)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 简化日志，构造指定包下的日志
+     */
+    private static String getPackageStackTrace(Throwable e, String packagePrefix) {
+        StringBuilder sb = new StringBuilder("\n").append(e).append("\n\tcause: ").append(e.getCause());
+        for (StackTraceElement traceElement : e.getStackTrace()) {
+            if (traceElement.getClassName().startsWith(packagePrefix)) {
+                sb.append("\n\tat ").append(traceElement);
+            }
+        }
+        return sb.toString();
     }
 
     protected String getHttpRequestInfo(HttpServletRequest request) {
