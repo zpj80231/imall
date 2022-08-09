@@ -34,6 +34,9 @@ third-party:
     timestamp-limit: 300 # 校验的时间戳时长，单位：秒
     plaintext-request: true # 是否开启明文请求
     check-sign: false # 是否校验sign
+  secrets:
+    alibaba: K81qX8vGOhuUMJOjmYOB9Q==
+    tencent: K81qX8vGOhuUMJOjmYOB9Q==
   fegin:
     admin: http://localhost:8080/admin
 

@@ -167,15 +167,7 @@ public class ThirdPartyPublicParamPlugin {
             return;
         }
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String uri = request.getRequestURI();
-        String[] split = uri.split("/");
-        int uriJsonIndex = 0;
-        for (int i = 0; i < split.length; i++) {
-            if ("json".equals(split[i])) {
-                uriJsonIndex = i;
-            }
-        }
-        String companyid = split[uriJsonIndex + 2];
+        String companyid = getCompanyidFromUri(request);
         checkToken(defaultAnnotation.tokenType(), companyid, commonRequest.getToken());
     }
 
@@ -321,4 +313,16 @@ public class ThirdPartyPublicParamPlugin {
         return corpSecret;
     }
 
+    public static String getCompanyidFromUri(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        String[] split = uri.split("/");
+        int uriJsonIndex = 0;
+        for (int i = 0; i < split.length; i++) {
+            if ("json".equals(split[i])) {
+                uriJsonIndex = i;
+            }
+        }
+        String companyid = split[uriJsonIndex + 2];
+        return companyid;
+    }
 }
