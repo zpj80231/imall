@@ -52,6 +52,7 @@ public class ThirdPartyRequestAdvice extends RequestBodyAdviceAdapter {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         log.info("original request url：{}", request.getRequestURL().toString());
+        log.info("original request url parameter：{}", request.getQueryString());
         log.info("original request header：{}", inputMessage.getHeaders());
         String body = new BufferedReader(new InputStreamReader(inputMessage.getBody())).lines().collect(Collectors.joining());
         body = body.replaceAll("    ", "");

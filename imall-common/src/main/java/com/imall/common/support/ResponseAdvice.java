@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 /**
  * 自定义统一响应体
  *
- * @author yangfuya
+ * @author zhangpengjun
  * @date 2022/6/28
  */
 @RestControllerAdvice(basePackages = "com.imall")
