@@ -59,3 +59,7 @@ asterisk:
 logging:
   level:
     com.imall: debug
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
+  file:
+    path: logs/
