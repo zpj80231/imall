@@ -1,6 +1,6 @@
 package com.imall.thirdparty.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -21,16 +21,13 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableSwagger2
+@ConditionalOnProperty(prefix = "swagger", name = "show", havingValue = "true")
 public class Swagger2Config implements WebMvcConfigurer {
-
-    @Value("${swagger.show:false}")
-    private boolean swaggerShow;
 
     @Bean
     public Docket jsonPathDocket() {
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .enable(swaggerShow)
                 .groupName("third-party")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.imall.thirdparty.modules"))
@@ -46,7 +43,6 @@ public class Swagger2Config implements WebMvcConfigurer {
     public Docket signPathDocket() {
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .enable(swaggerShow)
                 .groupName("third-party test")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.imall.thirdparty.modules"))
@@ -59,7 +55,7 @@ public class Swagger2Config implements WebMvcConfigurer {
     public ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("IMall Third Party 接口文档")
-                .description("IMall三方接口文档")
+                .description("IMall 三方接口文档")
                 .contact(new Contact("IMall", "", null))
                 .version("1.0")
                 .build();
