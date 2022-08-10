@@ -1,12 +1,11 @@
 package com.imall.notice.manager;
 
-
-import com.imall.notice.constant.NoticeConstant;
 import com.imall.notice.manager.listener.ManagerEventListener;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.asteriskjava.manager.ManagerConnection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -18,6 +17,7 @@ import javax.annotation.PreDestroy;
  */
 @Component
 @Slf4j
+@ConditionalOnProperty(prefix = "notice.producer", name = "enabled", havingValue = "true")
 public class AsteriskManager {
 
     @Autowired
@@ -26,19 +26,15 @@ public class AsteriskManager {
     @PostConstruct
     @SneakyThrows
     public void start() {
-        if (NoticeConstant.producerModel) {
-            managerConnection.login();
-            managerConnection.addEventListener(new ManagerEventListener());
-            log.info("AsteriskManager Login sucessfully...");
-        }
+        managerConnection.login();
+        managerConnection.addEventListener(new ManagerEventListener());
+        log.info("AsteriskManager Login sucessfully...");
     }
 
     @PreDestroy
     public void destroy() {
-        if (NoticeConstant.producerModel) {
-            managerConnection.logoff();
-            log.info("AsteriskManager logoff sucessfully...");
-        }
+        managerConnection.logoff();
+        log.info("AsteriskManager logoff sucessfully...");
     }
 
 }

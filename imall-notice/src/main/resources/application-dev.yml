@@ -47,10 +47,17 @@ spring:
 # 项目
 notice:
   # 生产者模式
-  producer-model: true
+  producer:
+  #    enabled: true
   # 消费者模式
-  consumer-model: true
+  consumer:
+    #    enabled: true
+    queue:
+      dead: cti1.imall.queue.Dead
+      hangupevent: cti1.imall.queue.HangupEvent
+      musicOnHoldStartEvent: cti1.imall.queue.MusicOnHoldStartEvent
 asterisk:
+  systemname: cti1
   hostname: 127.0.0.1
   port: 5038
   username: admin
