@@ -1,6 +1,5 @@
 package com.imall.notice.consumer.dead;
 
-import com.imall.notice.constant.MqConstant;
 import com.imall.notice.utils.AsteriskMQGetMsgUtil;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
@@ -20,16 +19,16 @@ import java.util.Random;
  * @date 2022/6/16
  */
 @Component
-@RabbitListener(queues = MqConstant.Queue.DeadThirdParty)
+@RabbitListener(queues = "${notice.consumer.queue.dead}")
 @Slf4j
-public class DeadThirdPartyConsumer {
+public class DeadEventConsumer {
 
     @RabbitHandler
     public void deadThirdPartyMessage(String msg, Channel channel, Message message) throws IOException {
         String callerIdNum = AsteriskMQGetMsgUtil.callerIdNum(msg);
         String eventId = message.getMessageProperties().getHeader("eventId");
         Map<String, Object> headers = message.getMessageProperties().getHeaders();
-        log.info("DeadThirdPartyConsumer 收到事件: {}, headers: {}", msg, headers);
+        log.info("DeadEventConsumer 收到消息, eventId = {}, 消息开始处理~", eventId);
         try {
             int i = new Random().nextInt(10);
             log.info("i = {}", i);
@@ -37,7 +36,8 @@ public class DeadThirdPartyConsumer {
             if (i > 3) {
                 int a = 123 / 0;
             }
-            log.info("i = {}, 消息正常处理~", i);
+            log.warn("i = {}, 消息正常处理~", i);
+            log.warn("DeadThirdPartyConsumer 收到事件: {}, headers: {}", msg, headers);
         } catch (Exception e) {
             log.error(e.getMessage());
             // 消息拒绝，重新入队

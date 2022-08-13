@@ -1,15 +1,10 @@
 package com.imall.notice.consumer;
 
-import com.imall.notice.constant.MqConstant;
 import com.imall.notice.utils.AsteriskMQGetMsgUtil;
 import com.imall.notice.webSocket.WebSocketServer;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
@@ -21,16 +16,12 @@ import org.springframework.stereotype.Component;
  * @date 2022/6/16
  */
 @Component
-@RabbitListener(bindings = @QueueBinding(
-        value = @Queue(value = MqConstant.Queue.HangupEvent, durable = "true", autoDelete = "false"),
-        exchange = @Exchange(value = MqConstant.Exchange.ThirdParty, type = ExchangeTypes.TOPIC),
-        key = MqConstant.RoutingKey.HangupEvent
-))
+@RabbitListener(queues = "${notice.consumer.queue.hangupevent}")
 @Slf4j
 public class HangupEventConsumer {
 
     @RabbitHandler
-    public void topicreviceMessage(String msg, Channel channel, Message message) {
+    public void hangupEventConsumerMessage(String msg, Channel channel, Message message) {
         // try {
         // 消费成功
         log.info("电话挂机: {}", msg);
@@ -41,9 +32,8 @@ public class HangupEventConsumer {
         // 手动ACK
         // channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         // } catch (Exception e) {
-        //     // 消费失败后需要重新入队的（设置为true）
         //     try {
-        //         // 消费失败后丢弃
+        //         // 消费失败后需要重新入队的（设置为true） false消费失败后丢弃
         //         // channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
         //     } catch (Exception e1) {
         //         log.error("HangupEventConsumer 消费失败后重新入队,MqMsgVo=[{}]", msg);

@@ -112,12 +112,12 @@ public class ManagerEventListener extends AbstractManagerEventListener {
      */
     private void sendRabbitMq(ManagerEvent event, String eventId) {
         String strEvent = JSON.toJSONString(event);
-        String routingKey = event.getClass().getSimpleName();
+        String routingKey = MqConstant.routingKeyPrefix + event.getClass().getSimpleName();
         if (log.isDebugEnabled()) {
             log.debug("GenerateEvent -> exchange: {}, routingKey: {}, eventId: {}, event: {}",
-                    MqConstant.Exchange.ThirdParty, routingKey, eventId, strEvent);
+                    MqConstant.Exchange.IMALL, routingKey, eventId, strEvent);
         }
-        rabbitTemplate.convertAndSend(MqConstant.Exchange.ThirdParty, routingKey, strEvent, (x) -> {
+        rabbitTemplate.convertAndSend(MqConstant.Exchange.IMALL, routingKey, strEvent, (x) -> {
             //这个参数是用来做消息的唯一标识
             //发布消息时使用，存储在消息的headers中
             x.getMessageProperties().setHeader("eventId", (eventId));

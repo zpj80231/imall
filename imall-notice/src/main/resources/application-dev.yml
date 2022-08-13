@@ -48,17 +48,17 @@ spring:
 notice:
   # 生产者模式
   producer:
-  #    enabled: true
+    enabled: true
   # 消费者模式
   consumer:
-    #    enabled: true
+    enabled: true
     queue:
       dead: cti1.imall.queue.Dead
       hangupevent: cti1.imall.queue.HangupEvent
       musicOnHoldStartEvent: cti1.imall.queue.MusicOnHoldStartEvent
 asterisk:
   systemname: cti1
-  hostname: 127.0.0.1
+  hostname: 192.168.1.244
   port: 5038
   username: admin
   password: admin
@@ -68,5 +68,5 @@ logging:
     com.imall: debug
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS
-  file:
-    path: logs/
+#  file:
+#    path: logs/

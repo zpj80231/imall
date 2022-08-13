@@ -32,7 +32,7 @@ public class ProductController {
         for (int i = 0; i < count; i++) {
             String msg = routingKey + " 生成消息 --> " + i;
             MqMsgVo mqMsgVo = new MqMsgVo(i, msg, "176****3232", new Date());
-            rabbitTemplate.convertAndSend(MqConstant.Exchange.ThirdParty, routingKey, mqMsgVo);
+            rabbitTemplate.convertAndSend(MqConstant.Exchange.IMALL, routingKey, mqMsgVo);
         }
         return "ok";
     }
@@ -51,7 +51,7 @@ public class ProductController {
 
             String msgid = "zhang+" + i;
             MqMsgVo mqMsgVo = new MqMsgVo(i, msgid, "133****3232", new Date());
-            rabbitTemplate.convertAndSend(MqConstant.Exchange.ThirdParty, routingKey, mqMsgVo, (x) -> {
+            rabbitTemplate.convertAndSend(MqConstant.Exchange.IMALL, routingKey, mqMsgVo, (x) -> {
                 //这个参数是用来做消息的唯一标识
                 //发布消息时使用，存储在消息的headers中
                 x.getMessageProperties().setHeader("msg_id", (msgid));
