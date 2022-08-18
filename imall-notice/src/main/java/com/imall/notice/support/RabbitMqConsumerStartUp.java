@@ -2,6 +2,7 @@ package com.imall.notice.support;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -25,10 +26,14 @@ public class RabbitMqConsumerStartUp implements ApplicationRunner {
     private void consumerStartUp() {
         rabbitListenerEndpointRegistry.getListenerContainers().forEach(c -> {
             if (!c.isRunning()) {
-                c.start();
+                if (c instanceof SimpleMessageListenerContainer) {
+                    SimpleMessageListenerContainer simpleMessageListenerContainer = (SimpleMessageListenerContainer) c;
+                    String[] queueNames = simpleMessageListenerContainer.getQueueNames();
+                    c.start();
+                    log.info("consumer queue names being monitored: {}", queueNames);
+                }
             }
         });
-        log.info("imall notice all consumers are started");
     }
 
     @Override
