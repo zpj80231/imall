@@ -11,7 +11,7 @@ public interface IResultCode {
     /**
      * 状态码
      */
-    long getCode();
+    Integer getCode();
 
     /**
      * 提示信息

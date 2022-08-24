@@ -31,6 +31,7 @@
         <mysql-connector.version>8.0.16</mysql-connector.version>
         <druid.version>1.2.11</druid.version>
         <mybatis-plus-starter.version>3.4.3.4</mybatis-plus-starter.version>
+        <mybatis.plus.dynamic.datasource.version>3.5.1</mybatis.plus.dynamic.datasource.version>
         <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
         <mybatis-plus-extension.version>3.4.3.4</mybatis-plus-extension.version>
         <velocity.version>2.2</velocity.version>
@@ -39,6 +40,8 @@
         <hutool.version>5.8.4</hutool.version>
         <fastjson.version>2.0.9</fastjson.version>
         <easyexcel.version>3.0.5</easyexcel.version>
+        <jsr305.version>3.0.2</jsr305.version>
+        <jjwt.version>0.9.1</jjwt.version>
     </properties>
 
     <modules>
@@ -48,6 +51,7 @@
         <module>imall-third-party</module>
         <module>imall-notice</module>
         <module>imall-task</module>
+        <module>imall-admin</module>
     </modules>
 
     <dependencies>
@@ -120,6 +124,11 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${mybatis.plus.dynamic.datasource.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus-extension.version}</version>
             </dependency>
@@ -152,6 +161,18 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
+            </dependency>
+            <!--jwt-->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>jsr305</artifactId>
+                <version>${jsr305.version}</version>
             </dependency>
 
         </dependencies>

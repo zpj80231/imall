@@ -73,7 +73,16 @@ public class CommonResult<T> {
      * @return CommonResult<T>
      */
     public static <T> CommonResult<T> failed(IResultCode resultCode) {
-        return new CommonResult<T>(resultCode.getCode(),resultCode.getMessage(),null);
+        return new CommonResult<T>(resultCode.getCode(), resultCode.getMessage(), null);
+    }
+
+    /**
+     * 返回失败，自定义失败提示信息
+     *
+     * @return CommonResult<T>
+     */
+    public static <T> CommonResult<T> failed(int code, String msg, T data) {
+        return new CommonResult<T>(code, msg, data);
     }
 
     /**
@@ -113,11 +122,17 @@ public class CommonResult<T> {
      * @return CommonResult<T>
      */
     public static <T> CommonResult<T> validateFailed(String message) {
-        return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(),message,null);
+        return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
     }
 
     private static <T> CommonResult<T> result(IResultCode resultCode, T data) {
-        return new CommonResult<T>(resultCode.getCode(),resultCode.getMessage(),data);
+        return new CommonResult<T>(resultCode.getCode(), resultCode.getMessage(), data);
     }
 
+    /**
+     * 暂未登录或token已经过期
+     */
+    public static <T> CommonResult<T> unauthorized(T data) {
+        return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
+    }
 }

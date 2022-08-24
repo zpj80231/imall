@@ -1,7 +1,7 @@
 package com.imall.common.support;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -17,16 +17,11 @@ import java.net.UnknownHostException;
  */
 @Component
 @Slf4j
+@ConditionalOnProperty(prefix = "swagger", name = "show", havingValue = "true")
 public class SwaggerPrintConfig implements ApplicationListener<WebServerInitializedEvent> {
-
-    @Value("${swagger.show:false}")
-    private boolean swaggerShow;
 
     @Override
     public void onApplicationEvent(WebServerInitializedEvent event) {
-        if (!swaggerShow) {
-            return;
-        }
         try {
             // 获取IP
             String hostAddress = Inet4Address.getLocalHost().getHostAddress();
