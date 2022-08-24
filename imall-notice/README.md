@@ -12,9 +12,24 @@
 # 项目配置
 notice:
   # 生产者模式
-  producer-model: true
+  producer:
+    enabled: true
   # 消费者模式
-  consumer-model: true
+  consumer:
+    enabled: true
 ```
 
+`@RabbitListener(queues = "${notice.consumer.queue.a}")` 监听，最好只指定需要监听的队列名，队列名在配置文件中配置。 否则通过 @RabbitListener
+绑定的方式，会将声明的队列、交换机、路由等信息在mq服务器新建（没有的话）。 @RabbitListener 作为消费者最好只监听服务端已经给我们分配好的队列。
+
+```java
+// 推荐方式
+@RabbitListener(queues = "${notice.consumer.queue.b}")
+// 拒绝这种方式声明消费者
+@RabbitListener(bindings = @QueueBinding(
+        value = @Queue(value = MqConstant.Queue.MusicOnHoldStartEvent, durable = "true", autoDelete = "false"),
+        exchange = @Exchange(value = MqConstant.Exchange.ThirdParty, type = ExchangeTypes.TOPIC),
+        key = MqConstant.RoutingKey.MusicOnHoldStartEvent
+))
+```
 
