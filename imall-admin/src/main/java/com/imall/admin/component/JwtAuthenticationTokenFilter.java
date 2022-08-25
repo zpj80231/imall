@@ -42,18 +42,19 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(this.tokenHeader);
         if (authHeader != null && authHeader.startsWith(this.tokenHead)) {
-            // The part after "Bearer "
+            // tokenHead 之后的部分为真正的 jwt token
             String authToken = authHeader.substring(this.tokenHead.length());
-            // 校验token是否过期
+            // 校验客户端token是否过期
             if (jwtTokenUtil.isTokenExpired(authToken)) {
                 Asserts.fail("token过期，用户认证失败");
             }
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
-            log.info("authorization checking username:{}", username);
+            log.info("authorization username obtained from token:{}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 // todo 从redis中获取当前用户信息
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                 if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+                    // 认证通过，放入上下文，以便让 spring security 后续过滤器感知已认证通过
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     log.info("authenticated user:{}", username);

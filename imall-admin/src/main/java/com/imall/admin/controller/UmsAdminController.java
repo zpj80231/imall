@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Api(tags = "UmsAdminController", description = "后台用户管理")
 @RequestMapping("/user")
-public class UserController {
+public class UmsAdminController {
 
     @Value("${jwt.tokenHeader}")
     private String tokenHeader;

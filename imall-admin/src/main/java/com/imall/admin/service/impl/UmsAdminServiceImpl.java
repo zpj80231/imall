@@ -10,8 +10,6 @@ import com.imall.admin.util.JwtTokenUtil;
 import com.imall.common.exception.ApiException;
 import com.imall.common.exception.Asserts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,10 +36,10 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdminEnt
         if (!userDetails.isEnabled()) {
             Asserts.fail("帐号被锁定，请联系管理员");
         }
-        // 认证通过
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        // 认证通过，用户信息放入redis
+        // UsernamePasswordAuthenticationToken authenticationToken =
+        //         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        // SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         String token = jwtTokenUtil.generateToken(userDetails);
         return token;
     }
