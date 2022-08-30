@@ -36,13 +36,13 @@ spring:
         max-concurrency: 10
         # 消费者自动启动
         auto-startup: false
+        # default-requeue-rejected: false
         retry:
           enabled: true # 开启重试
           max-attempts: 5 # 重试次数
           max-interval: 10000   # 重试最大间隔时间ms
           initial-interval: 3000  # 重试初始间隔时间ms
           multiplier: 2 # 间隔时间乘子，间隔时间*乘子=下一次的间隔时间，最大不能超过设置的最大间隔时间
-#        default-requeue-rejected: false
 
 # 项目
 notice:
@@ -53,9 +53,9 @@ notice:
   consumer:
     enabled: true
     queue:
-      dead: cti1.imall.queue.Dead
-      hangupevent: cti1.imall.queue.HangupEvent
-      musicOnHoldStartEvent: cti1.imall.queue.MusicOnHoldStartEvent
+      dead: ${asterisk.systemname}.imall.queue.Dead
+      hangupevent: ${asterisk.systemname}.imall.queue.HangupEvent
+      musicOnHoldStartEvent: ${asterisk.systemname}.imall.queue.MusicOnHoldStartEvent
 asterisk:
   systemname: cti1
   hostname: 192.168.1.244
