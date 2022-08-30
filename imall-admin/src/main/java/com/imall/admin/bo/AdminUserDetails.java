@@ -1,6 +1,6 @@
 package com.imall.admin.bo;
 
-import com.imall.admin.domain.UmsAdminEntity;
+import com.imall.mbg.domain.UmsAdminEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

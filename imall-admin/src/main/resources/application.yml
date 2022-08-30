@@ -23,7 +23,7 @@ mybatis-plus:
   #实体扫描，多个package用逗号或者分号分隔
   mapper-locations: classpath*:/mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.imall.admin.domain
+  typeAliasesPackage: com.imall.mbg.domain
   global-config:
     db-config:
       id-type: auto
@@ -38,7 +38,7 @@ jwt:
   tokenHeader: Authorization #JWT存储的请求头
   tokenHead: 'Bearer '  #JWT负载中拿到开头
   secret: imall-admin-secret #JWT加解密使用的密钥
-  expiration: 604800 #JWT的超期限时间(60*60*24*7)
+  expiration: 86400 #JWT的超期限时间(60*60*24*1)
 
 security:
   ignored:

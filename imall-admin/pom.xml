@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.imall</groupId>
-            <artifactId>imall-common</artifactId>
+            <artifactId>imall-mbg</artifactId>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

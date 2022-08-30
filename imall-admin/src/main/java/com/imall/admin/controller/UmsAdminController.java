@@ -1,12 +1,16 @@
 package com.imall.admin.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imall.admin.bo.AdminUserDetails;
 import com.imall.admin.dto.TokenDto;
 import com.imall.admin.dto.UmsAdminLoginDto;
 import com.imall.admin.service.UmsAdminService;
+import com.imall.common.api.CommonPage;
 import com.imall.common.api.CommonResult;
+import com.imall.mbg.domain.UmsAdminEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,14 +20,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author zhangpengjun
  * @date 2022/8/24
  */
+@Slf4j
 @RestController
-@Api(tags = "UmsAdminController", description = "后台用户管理")
+@Api(value = " 后台用户管理 ", tags = "Ums模块")
 @RequestMapping("/user")
 public class UmsAdminController {
 
@@ -57,6 +65,24 @@ public class UmsAdminController {
         String username = loginUser.getUmsAdminEntity().getUsername();
         // todo 删除redis中用户登录信息
         return CommonResult.success("退出成功");
+    }
+
+    @GetMapping("/list")
+    @ApiOperation(value = "查询所有用户信息", notes = "用户信息")
+    public CommonResult<List<UmsAdminEntity>> findAll() {
+        List<UmsAdminEntity> list = umsAdminService.list();
+        return CommonResult.success(list);
+    }
+
+    @GetMapping("/findPage")
+    @ApiOperation(value = "分页查询用户信息", notes = "用户")
+    public CommonResult<CommonPage<UmsAdminEntity>> findPage(@RequestParam(required = true, name = "pageNum", defaultValue = "1") Long pageNum,
+                                                             @RequestParam(required = true, name = "pageSize", defaultValue = "2") Long pageSize) {
+        log.info("pageNum: [{}], pageSize: [{}]", pageNum, pageSize);
+        Page<UmsAdminEntity> page = new Page<>(pageNum, pageSize);
+        umsAdminService.page(page);
+        CommonPage<UmsAdminEntity> restPage = CommonPage.restPage(page);
+        return CommonResult.success(restPage);
     }
 
 }

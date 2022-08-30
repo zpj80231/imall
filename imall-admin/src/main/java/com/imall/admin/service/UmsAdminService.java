@@ -1,7 +1,7 @@
 package com.imall.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.imall.admin.domain.UmsAdminEntity;
+import com.imall.mbg.domain.UmsAdminEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**

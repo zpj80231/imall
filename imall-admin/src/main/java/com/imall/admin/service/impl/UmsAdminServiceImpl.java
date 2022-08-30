@@ -3,23 +3,23 @@ package com.imall.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.imall.admin.bo.AdminUserDetails;
-import com.imall.admin.domain.UmsAdminEntity;
-import com.imall.admin.mapper.UmsAdminMapper;
 import com.imall.admin.service.UmsAdminService;
 import com.imall.admin.util.JwtTokenUtil;
 import com.imall.common.exception.ApiException;
 import com.imall.common.exception.Asserts;
+import com.imall.mbg.domain.UmsAdminEntity;
+import com.imall.mbg.mapper.UmsAdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 /**
- *
  * @author zhangpengjun
  * @date 2022/8/24
  */
 @Service
-public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdminEntity> implements UmsAdminService{
+public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdminEntity> implements UmsAdminService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
