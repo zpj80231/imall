@@ -10,7 +10,7 @@ JAR_PATH='/home/imall'
 JAR_NAME=imall-third-party.jar
 
 # java虚拟机启动参数
-JAVA_OPTS="-Xms512m -Xmx512m -Dlogging.file.path="$JAR_PATH"/logs"
+JAVA_OPTS="-Xms512m -Xmx512m -Dlogging.file.path="$JAR_PATH"/logs/"$APP_NAME
 
 # 根据实际情况来修改以上配置信息 ##################################
 
@@ -52,7 +52,8 @@ start() {
     nohup java $JAVA_OPTS -jar $JAR_PATH/$JAR_NAME > /dev/null 2>&1 &
     echo "start $APP_NAME successed pid is $! "
    fi
-  }
+  status
+}
 
 # 服务停止方法
 stop() {
