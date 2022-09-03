@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityHttpConfig {
 
     @Autowired
-    private IgnoreUrlsConfig ignoreUrlsConfig;
+    private static IgnoreUrlsConfig ignoreUrlsConfig;
     @Autowired
     private RestAccessDeniedHandler restAccessDeniedHandler;
     @Autowired

@@ -1,13 +1,17 @@
 package com.imall.admin.bo;
 
 import com.imall.mbg.domain.UmsAdminEntity;
+import com.imall.mbg.domain.UmsResourceEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author zhangpengjun
@@ -23,11 +27,15 @@ public class AdminUserDetails implements UserDetails {
      * 用户
      */
     private UmsAdminEntity umsAdminEntity;
-    //todo 权限信息
+    /**
+     * 权限
+     */
+    private List<UmsResourceEntity> resourceList;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        // 添加用户角色
+        return resourceList.stream().map(r -> new SimpleGrantedAuthority("ROLE:" + r.getId())).collect(Collectors.toList());
     }
 
     @Override

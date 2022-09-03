@@ -3,16 +3,22 @@ package com.imall.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.imall.admin.bo.AdminUserDetails;
+import com.imall.admin.dao.UmsAdminRoleRelationDao;
 import com.imall.admin.service.UmsAdminService;
 import com.imall.admin.util.JwtTokenUtil;
 import com.imall.common.exception.ApiException;
 import com.imall.common.exception.Asserts;
 import com.imall.mbg.domain.UmsAdminEntity;
+import com.imall.mbg.domain.UmsResourceEntity;
 import com.imall.mbg.mapper.UmsAdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author zhangpengjun
@@ -25,6 +31,8 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdminEnt
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private UmsAdminRoleRelationDao umsAdminRoleRelationDao;
 
     @Override
     public String login(String username, String password) {
@@ -37,9 +45,9 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdminEnt
             Asserts.fail("帐号被锁定，请联系管理员");
         }
         // 认证通过，用户信息放入redis
-        // UsernamePasswordAuthenticationToken authenticationToken =
-        //         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-        // SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         String token = jwtTokenUtil.generateToken(userDetails);
         return token;
     }
@@ -52,6 +60,12 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdminEnt
         if (adminEntity == null) {
             throw new ApiException("用户名或密码错误");
         }
-        return new AdminUserDetails(adminEntity);
+        return new AdminUserDetails(adminEntity, getResourceList(adminEntity.getId()));
+    }
+
+    @Override
+    public List<UmsResourceEntity> getResourceList(Long id) {
+        List<UmsResourceEntity> resourceList = umsAdminRoleRelationDao.getResourceList(id);
+        return resourceList;
     }
 }
