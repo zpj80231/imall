@@ -34,8 +34,8 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // 添加用户角色
-        return resourceList.stream().map(r -> new SimpleGrantedAuthority("ROLE:" + r.getId())).collect(Collectors.toList());
+        // 添加用户权限
+        return resourceList.stream().map(r -> new SimpleGrantedAuthority("Permission:" + r.getId())).collect(Collectors.toList());
     }
 
     @Override

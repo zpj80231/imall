@@ -1,4 +1,4 @@
-package com.imall.admin.config;
+package com.imall.admin.component;
 
 import cn.hutool.json.JSONUtil;
 import com.imall.common.api.CommonResult;

@@ -1,7 +1,13 @@
 package com.imall.admin.config;
 
+import com.imall.admin.component.DynamicAccessDecisionManager;
+import com.imall.admin.component.DynamicSecurityFilter;
+import com.imall.admin.component.DynamicSecurityMetadataSource;
 import com.imall.admin.component.JwtAuthenticationTokenFilter;
+import com.imall.admin.component.RestAccessDeniedHandler;
+import com.imall.admin.component.RestAuthenticationEntryPoint;
 import com.imall.admin.util.JwtTokenUtil;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -45,6 +51,25 @@ public class SecurityCommonConfig {
     @Bean
     public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
         return new JwtAuthenticationTokenFilter();
+    }
+
+    @Bean
+    // @ConditionalOnBean(DynamicSecurityService.class)
+    @ConditionalOnBean(name = "dynamicSecurityService")
+    public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
+        return new DynamicSecurityMetadataSource();
+    }
+
+    @Bean
+    @ConditionalOnBean(name = "dynamicSecurityService")
+    public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
+        return new DynamicAccessDecisionManager();
+    }
+
+    @Bean
+    @ConditionalOnBean(name = "dynamicSecurityService")
+    public DynamicSecurityFilter dynamicSecurityFilter() {
+        return new DynamicSecurityFilter();
     }
 
 }
