@@ -1,6 +1,7 @@
 package com.imall.admin.component;
 
 import com.imall.admin.util.JwtTokenUtil;
+import com.imall.common.api.ResultCode;
 import com.imall.common.exception.Asserts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             String authToken = authHeader.substring(this.tokenHead.length());
             // 校验客户端token是否过期
             if (jwtTokenUtil.isTokenExpired(authToken)) {
-                Asserts.fail("token过期，用户认证失败");
+                Asserts.fail(ResultCode.UNAUTHORIZED);
             }
             String username = jwtTokenUtil.getUserNameFromToken(authToken);
-            log.info("authorization username obtained from token:{}", username);
+            log.info("authorization username obtained from token: {}", username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 // todo 从redis中获取当前用户信息
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
@@ -57,7 +58,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                     // 认证通过，放入上下文，以便让 spring security 后续过滤器感知已认证通过
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    log.info("authenticated user:{}", username);
+                    log.info("authenticated user: {}", username);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }

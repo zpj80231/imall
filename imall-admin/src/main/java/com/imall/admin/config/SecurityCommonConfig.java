@@ -3,6 +3,7 @@ package com.imall.admin.config;
 import com.imall.admin.component.DynamicAccessDecisionManager;
 import com.imall.admin.component.DynamicSecurityFilter;
 import com.imall.admin.component.DynamicSecurityMetadataSource;
+import com.imall.admin.component.DynamicSecurityService;
 import com.imall.admin.component.JwtAuthenticationTokenFilter;
 import com.imall.admin.component.RestAccessDeniedHandler;
 import com.imall.admin.component.RestAuthenticationEntryPoint;
@@ -37,7 +38,6 @@ public class SecurityCommonConfig {
         return new RestAuthenticationEntryPoint();
     }
 
-
     @Bean
     public IgnoreUrlsConfig ignoreUrlsConfig() {
         return new IgnoreUrlsConfig();
@@ -54,20 +54,19 @@ public class SecurityCommonConfig {
     }
 
     @Bean
-    // @ConditionalOnBean(DynamicSecurityService.class)
-    @ConditionalOnBean(name = "dynamicSecurityService")
+    @ConditionalOnBean(DynamicSecurityService.class)
     public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
         return new DynamicSecurityMetadataSource();
     }
 
     @Bean
-    @ConditionalOnBean(name = "dynamicSecurityService")
+    @ConditionalOnBean(DynamicSecurityService.class)
     public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
         return new DynamicAccessDecisionManager();
     }
 
     @Bean
-    @ConditionalOnBean(name = "dynamicSecurityService")
+    @ConditionalOnBean(DynamicSecurityService.class)
     public DynamicSecurityFilter dynamicSecurityFilter() {
         return new DynamicSecurityFilter();
     }

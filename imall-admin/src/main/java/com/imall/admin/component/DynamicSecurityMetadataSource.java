@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 获取请求的所需权限
+ * 获取当前请求的所需权限
  *
  * @author zhangpengjun
  * @date 2022/9/5
