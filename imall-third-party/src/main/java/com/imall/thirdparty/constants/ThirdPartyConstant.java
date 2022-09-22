@@ -31,6 +31,11 @@ public class ThirdPartyConstant {
      * 是否明文请求
      */
     public static Boolean plaintextRequest = false;
+    /**
+     * ip白名单
+     * 0: 默认禁用所有
+     */
+    public static String ipWhilte = "0";
 
     public void setCheckToken(Boolean checkToken) {
         ThirdPartyConstant.checkToken = checkToken;
