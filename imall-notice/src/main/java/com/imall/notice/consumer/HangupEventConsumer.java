@@ -1,6 +1,6 @@
 package com.imall.notice.consumer;
 
-import com.imall.notice.utils.AsteriskMQGetMsgUtil;
+import com.imall.notice.util.AsteriskMQGetMsgUtils;
 import com.imall.notice.webSocket.WebSocketServer;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class HangupEventConsumer {
         // try {
         // 消费成功
         log.info("电话挂机: {}", msg);
-        String callerIdNum = AsteriskMQGetMsgUtil.callerIdNum(msg);
+        String callerIdNum = AsteriskMQGetMsgUtils.callerIdNum(msg);
         String eventId = message.getMessageProperties().getHeader("eventId");
         String webMsg = callerIdNum + "挂断电话, [" + eventId + "]";
         WebSocketServer.sendInfo(webMsg, callerIdNum);

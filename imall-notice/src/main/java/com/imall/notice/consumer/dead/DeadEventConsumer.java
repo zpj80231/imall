@@ -1,6 +1,6 @@
 package com.imall.notice.consumer.dead;
 
-import com.imall.notice.utils.AsteriskMQGetMsgUtil;
+import com.imall.notice.util.AsteriskMQGetMsgUtils;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -25,7 +25,7 @@ public class DeadEventConsumer {
 
     @RabbitHandler
     public void deadThirdPartyMessage(String msg, Channel channel, Message message) throws IOException {
-        String callerIdNum = AsteriskMQGetMsgUtil.callerIdNum(msg);
+        String callerIdNum = AsteriskMQGetMsgUtils.callerIdNum(msg);
         String eventId = message.getMessageProperties().getHeader("eventId");
         Map<String, Object> headers = message.getMessageProperties().getHeaders();
         log.info("DeadEventConsumer 收到消息, eventId = {}, 消息开始处理~", eventId);

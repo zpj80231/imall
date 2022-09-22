@@ -1,6 +1,6 @@
 package com.imall.notice.consumer;
 
-import com.imall.notice.utils.AsteriskMQGetMsgUtil;
+import com.imall.notice.util.AsteriskMQGetMsgUtils;
 import com.imall.notice.webSocket.WebSocketServer;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class MusicOnHoldStartEventConsumer {
         String eventId = message.getMessageProperties().getHeader("eventId");
 
         // 同一个事件只推送一次，第一次正常推送后保存redis
-        String callerIdNum = AsteriskMQGetMsgUtil.callerIdNum(msg);
+        String callerIdNum = AsteriskMQGetMsgUtils.callerIdNum(msg);
         String webMsg = callerIdNum + "电话响铃开始, [" + eventId + "]";
         WebSocketServer.sendInfo(webMsg, callerIdNum);
 

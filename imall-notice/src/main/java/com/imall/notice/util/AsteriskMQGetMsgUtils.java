@@ -1,4 +1,4 @@
-package com.imall.notice.utils;
+package com.imall.notice.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONObject;
  * @author zhangpengjun
  * @date 2022/6/17
  */
-public class AsteriskMQGetMsgUtil {
+public class AsteriskMQGetMsgUtils {
 
     public static String getValueFromKey(String msg, String key) {
         String result = null;
