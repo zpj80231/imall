@@ -2,6 +2,7 @@ package com.imall.notice.controller;
 
 import com.imall.notice.constant.MqConstant;
 import com.imall.notice.vo.MqMsgVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
@@ -17,6 +20,7 @@ import java.util.Date;
  * @author zhangpengjun
  * @date 2022/6/16
  */
+@Slf4j
 @Controller
 public class ProductController {
 
@@ -59,6 +63,13 @@ public class ProductController {
                 return x;
             });
         }
+        return "ok";
+    }
+
+    @PostMapping("/receiveMessage")
+    @ResponseBody
+    public String sendMessage(@RequestBody String msg) {
+        log.warn("测试收到消息：{}", msg);
         return "ok";
     }
 

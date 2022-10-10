@@ -1,7 +1,5 @@
 package com.imall.notice.consumer;
 
-import com.imall.notice.util.AsteriskMQGetMsgUtils;
-import com.imall.notice.webSocket.WebSocketServer;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -18,27 +16,24 @@ import org.springframework.stereotype.Component;
 @Component
 @RabbitListener(queues = "${notice.consumer.queue.hangupevent}")
 @Slf4j
-public class HangupEventConsumer {
+public class HangupEventConsumer extends AbstractEventConsumer {
 
-    @RabbitHandler
-    public void hangupEventConsumerMessage(String msg, Channel channel, Message message) {
-        // try {
-        // 消费成功
-        log.info("电话挂机: {}", msg);
-        String callerIdNum = AsteriskMQGetMsgUtils.callerIdNum(msg);
-        String eventId = message.getMessageProperties().getHeader("eventId");
-        String webMsg = callerIdNum + "挂断电话, [" + eventId + "]";
-        WebSocketServer.sendInfo(webMsg, callerIdNum);
-        // 手动ACK
-        // channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-        // } catch (Exception e) {
-        //     try {
-        //         // 消费失败后需要重新入队的（设置为true） false消费失败后丢弃
-        //         // channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
-        //     } catch (Exception e1) {
-        //         log.error("HangupEventConsumer 消费失败后重新入队,MqMsgVo=[{}]", msg);
-        //     }
-        // }
+    @Override
+    public String getEventType() {
+        return "HangupEvent";
+    }
+
+    /**
+     * @param msg
+     * @param channel
+     * @param message 消息
+     * @throws Exception
+     * @RabbitHandler(isDefault = true) 覆盖父类的监听，不然mq认为有两个，不知道用哪个会报错
+     */
+    @RabbitHandler(isDefault = true)
+    @Override
+    public void topicreviceMessage(String msg, Channel channel, Message message) throws Exception {
+        log.info("HangupEvent: {}", msg);
     }
 
 }

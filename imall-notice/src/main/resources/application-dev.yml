@@ -4,6 +4,33 @@ server:
 
 # spring相关
 spring:
+  datasource:
+    dynamic:
+      primary: config
+      datasource:
+        imall:
+          url: jdbc:mysql://127.0.0.1:3306/imall?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+          username: root
+          password: root
+        config:
+          url: jdbc:mysql://127.0.0.1:3306/imall?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+          username: root
+          password: root
+      durid:
+        initial-size: 4
+        max-active: 20
+        min-idle: 4
+        max-wait: 60000
+    autoconfigure:
+      exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
+  task:
+    execution:
+      pool:
+        max-size: 20
+        core-size: 8
+        keep-alive: 3
+        queue-capacity: 1000
+      thread-name-prefix: async-
   redis:
     database: 0
     host: localhost         # Redis服务器地址
