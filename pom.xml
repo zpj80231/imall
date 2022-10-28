@@ -52,6 +52,7 @@
         <module>imall-notice</module>
         <module>imall-task</module>
         <module>imall-admin</module>
+        <module>imall-ws</module>
     </modules>
 
     <dependencies>
