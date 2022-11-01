@@ -34,10 +34,10 @@ public class ThirdPartyPublicParamInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 默认对每次请求都添加校验，防止线程池环境下的重用
-        ThirdPartyPublicParamPlugin.setIsCheckToken(true);
-        ThirdPartyPublicParamPlugin.setIsCheckSign(true);
-        ThirdPartyPublicParamPlugin.setIsCheckTimestamp(true);
+        // 默认对每次请求都添加校验，防止线程池环境下ThreadLocal的重用
+        ThirdPartyPublicParamPlugin.setIsCheckToken(ThirdPartyConstant.checkToken);
+        ThirdPartyPublicParamPlugin.setIsCheckSign(ThirdPartyConstant.checkSign);
+        ThirdPartyPublicParamPlugin.setIsCheckTimestamp(ThirdPartyConstant.checkTimestamp);
         // 白名单跳过校验
         String ipAddr = IpUtil.getIpAddr(request);
         HttpServletRequestWrapper requestWrapper = (HttpServletRequestWrapper) request;
