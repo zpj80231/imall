@@ -1,9 +1,9 @@
 package com.imall.admin.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.imall.admin.bo.AdminUserDetails;
-import com.imall.admin.dto.TokenDto;
-import com.imall.admin.dto.UmsAdminLoginDto;
+import com.imall.admin.domain.bo.AdminUserDetails;
+import com.imall.admin.domain.dto.TokenDto;
+import com.imall.admin.domain.dto.UmsAdminLoginDto;
 import com.imall.admin.service.UmsAdminService;
 import com.imall.common.api.CommonPage;
 import com.imall.common.api.CommonResult;

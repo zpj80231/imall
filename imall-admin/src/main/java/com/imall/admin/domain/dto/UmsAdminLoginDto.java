@@ -1,4 +1,4 @@
-package com.imall.admin.dto;
+package com.imall.admin.domain.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

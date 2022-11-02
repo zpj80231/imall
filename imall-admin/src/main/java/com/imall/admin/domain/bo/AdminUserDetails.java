@@ -1,4 +1,4 @@
-package com.imall.admin.bo;
+package com.imall.admin.domain.bo;
 
 import com.imall.mbg.domain.UmsAdminEntity;
 import com.imall.mbg.domain.UmsResourceEntity;

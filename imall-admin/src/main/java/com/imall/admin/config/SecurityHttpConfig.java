@@ -2,9 +2,9 @@ package com.imall.admin.config;
 
 import com.imall.admin.component.DynamicSecurityFilter;
 import com.imall.admin.component.DynamicSecurityService;
-import com.imall.admin.component.JwtAuthenticationTokenFilter;
 import com.imall.admin.component.RestAccessDeniedHandler;
 import com.imall.admin.component.RestAuthenticationEntryPoint;
+import com.imall.admin.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

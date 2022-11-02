@@ -2,9 +2,9 @@ package com.imall.admin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.imall.admin.bo.AdminUserDetails;
-import com.imall.admin.dao.UmsAdminRoleRelationDao;
+import com.imall.admin.domain.bo.AdminUserDetails;
 import com.imall.admin.service.UmsAdminService;
+import com.imall.admin.service.dao.UmsAdminRoleRelationDao;
 import com.imall.admin.util.JwtTokenUtil;
 import com.imall.common.exception.ApiException;
 import com.imall.common.exception.Asserts;

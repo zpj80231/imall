@@ -1,4 +1,4 @@
-package com.imall.admin.component;
+package com.imall.admin.filter;
 
 import com.imall.admin.util.JwtTokenUtil;
 import com.imall.common.api.ResultCode;

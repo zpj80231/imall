@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.imall.mbg.mapper", "com.imall.admin.dao"})
+@MapperScan(basePackages = {"com.imall.mbg.mapper", "com.imall.admin.service.dao"})
 public class MyBatisPlusConfig {
 
 }

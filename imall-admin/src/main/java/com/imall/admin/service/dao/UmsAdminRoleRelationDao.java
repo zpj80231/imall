@@ -1,4 +1,4 @@
-package com.imall.admin.dao;
+package com.imall.admin.service.dao;
 
 import com.imall.mbg.domain.UmsResourceEntity;
 import org.apache.ibatis.annotations.Param;
