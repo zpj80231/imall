@@ -29,5 +29,19 @@ public interface UmsAdminService extends IService<UmsAdminEntity> {
      */
     UserDetails loadUserByUsername(String username);
 
+    /**
+     * 获得资源列表
+     *
+     * @param id id
+     * @return {@link List}<{@link UmsResourceEntity}>
+     */
     List<UmsResourceEntity> getResourceList(Long id);
+
+    /**
+     * 刷新令牌
+     *
+     * @param token 令牌
+     * @return {@link String}
+     */
+    String refreshToken(String token);
 }

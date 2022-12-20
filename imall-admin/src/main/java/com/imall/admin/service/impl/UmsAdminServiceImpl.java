@@ -68,4 +68,9 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdminEnt
         List<UmsResourceEntity> resourceList = umsAdminRoleRelationDao.getResourceList(id);
         return resourceList;
     }
+
+    @Override
+    public String refreshToken(String token) {
+        return jwtTokenUtil.refreshHeadToken(token);
+    }
 }

@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -48,12 +51,24 @@ public class UmsAdminController {
         return "hello";
     }
 
+    @ApiOperation(value = "刷新token")
+    @RequestMapping(value = "/refreshToken", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult refreshToken(HttpServletRequest request) {
+        String token = request.getHeader(tokenHeader);
+        String refreshToken = umsAdminService.refreshToken(token);
+        if (refreshToken == null) {
+            return CommonResult.failed("token已经过期！");
+        }
+        return CommonResult.success(new TokenDto(refreshToken, tokenHead));
+    }
+
     @PostMapping("/login")
     @ApiOperation("登录")
-    public TokenDto login(@RequestBody @Validated UmsAdminLoginDto umsAdminLoginDto) {
+    public CommonResult login(@RequestBody @Validated UmsAdminLoginDto umsAdminLoginDto) {
         String token = umsAdminService.login(umsAdminLoginDto.getUsername(), umsAdminLoginDto.getPassword());
         // todo redis中保存用户登录信息
-        return new TokenDto(token, tokenHead);
+        return CommonResult.success(new TokenDto(token, tokenHead));
     }
 
     @PostMapping("/logout")
