@@ -3,6 +3,7 @@ package com.imall.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.imall.mbg.domain.UmsAdminEntity;
 import com.imall.mbg.domain.UmsResourceEntity;
+import com.imall.mbg.domain.UmsRoleEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
@@ -44,4 +45,20 @@ public interface UmsAdminService extends IService<UmsAdminEntity> {
      * @return {@link String}
      */
     String refreshToken(String token);
+
+    /**
+     * 获取用户通过用户名
+     *
+     * @param username 用户名
+     * @return {@link UmsAdminEntity}
+     */
+    UmsAdminEntity getAdminByUsername(String username);
+
+    /**
+     * 获取角色列表
+     *
+     * @param adminId adminId
+     * @return {@link List}<{@link UmsRoleEntity}>
+     */
+    List<UmsRoleEntity> getRoleList(Long adminId);
 }

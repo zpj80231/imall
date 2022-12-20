@@ -1,13 +1,16 @@
 package com.imall.admin.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imall.admin.domain.bo.AdminUserDetails;
 import com.imall.admin.domain.dto.TokenDto;
 import com.imall.admin.domain.dto.UmsAdminLoginDto;
 import com.imall.admin.service.UmsAdminService;
+import com.imall.admin.service.UmsRoleService;
 import com.imall.common.api.CommonPage;
 import com.imall.common.api.CommonResult;
 import com.imall.mbg.domain.UmsAdminEntity;
+import com.imall.mbg.domain.UmsRoleEntity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +29,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zhangpengjun
@@ -43,7 +50,9 @@ public class UmsAdminController {
     @Value("${jwt.tokenHead}")
     private String tokenHead;
     @Autowired
-    private UmsAdminService umsAdminService;
+    private UmsAdminService adminService;
+    @Autowired
+    private UmsRoleService roleService;
 
     @GetMapping("/hello")
     @ApiOperation("hello")
@@ -56,7 +65,7 @@ public class UmsAdminController {
     @ResponseBody
     public CommonResult refreshToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
-        String refreshToken = umsAdminService.refreshToken(token);
+        String refreshToken = adminService.refreshToken(token);
         if (refreshToken == null) {
             return CommonResult.failed("token已经过期！");
         }
@@ -66,7 +75,7 @@ public class UmsAdminController {
     @PostMapping("/login")
     @ApiOperation("登录")
     public CommonResult login(@RequestBody @Validated UmsAdminLoginDto umsAdminLoginDto) {
-        String token = umsAdminService.login(umsAdminLoginDto.getUsername(), umsAdminLoginDto.getPassword());
+        String token = adminService.login(umsAdminLoginDto.getUsername(), umsAdminLoginDto.getPassword());
         // todo redis中保存用户登录信息
         return CommonResult.success(new TokenDto(token, tokenHead));
     }
@@ -82,22 +91,36 @@ public class UmsAdminController {
         return CommonResult.success("退出成功");
     }
 
-    @GetMapping("/list")
-    @ApiOperation(value = "查询所有用户信息", notes = "用户信息")
-    public CommonResult<List<UmsAdminEntity>> findAll() {
-        List<UmsAdminEntity> list = umsAdminService.list();
-        return CommonResult.success(list);
-    }
-
     @GetMapping("/findPage")
     @ApiOperation(value = "分页查询用户信息", notes = "用户")
     public CommonResult<CommonPage<UmsAdminEntity>> findPage(@RequestParam(required = true, name = "pageNum", defaultValue = "1") Long pageNum,
                                                              @RequestParam(required = true, name = "pageSize", defaultValue = "2") Long pageSize) {
         log.info("pageNum: [{}], pageSize: [{}]", pageNum, pageSize);
         Page<UmsAdminEntity> page = new Page<>(pageNum, pageSize);
-        umsAdminService.page(page);
+        adminService.page(page);
         CommonPage<UmsAdminEntity> restPage = CommonPage.restPage(page);
         return CommonResult.success(restPage);
+    }
+
+    @ApiOperation(value = "获取当前登录用户信息")
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult getAdminInfo(Principal principal) {
+        if (principal == null) {
+            return CommonResult.unauthorized(null);
+        }
+        String username = principal.getName();
+        UmsAdminEntity umsAdmin = adminService.getAdminByUsername(username);
+        Map<String, Object> data = new HashMap<>();
+        data.put("username", umsAdmin.getUsername());
+        data.put("menus", roleService.getMenuList(umsAdmin.getId()));
+        data.put("icon", umsAdmin.getIcon());
+        List<UmsRoleEntity> roleList = adminService.getRoleList(umsAdmin.getId());
+        if (CollUtil.isNotEmpty(roleList)) {
+            List<String> roles = roleList.stream().map(UmsRoleEntity::getName).collect(Collectors.toList());
+            data.put("roles", roles);
+        }
+        return CommonResult.success(data);
     }
 
 }
