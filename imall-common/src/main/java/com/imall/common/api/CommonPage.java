@@ -2,6 +2,7 @@ package com.imall.common.api;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
 import lombok.Data;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class CommonPage<T> {
         result.setPageNum(pageResult.getCurrent());
         result.setPageSize(pageResult.getSize());
         result.setTotal(pageResult.getTotal());
-        result.setTotalPage(pageResult.getTotal()/pageResult.getSize()+1);
+        result.setTotalPage(pageResult.getTotal() / pageResult.getSize() + 1);
         result.setList(list);
         return result;
     }
@@ -50,5 +51,16 @@ public class CommonPage<T> {
         currPage = currPage == null || currPage == 0 ? 1 : currPage;
         pageSize = pageSize == null || pageSize == 0 ? 10 : pageSize;
         return new Page<>(currPage, pageSize);
+    }
+
+    public static <T> CommonPage<T> restPage(List<T> list) {
+        CommonPage<T> result = new CommonPage<T>();
+        PageInfo<T> pageInfo = new PageInfo<T>(list);
+        result.setTotalPage(Long.valueOf(pageInfo.getPages()));
+        result.setPageNum(Long.valueOf(pageInfo.getPageNum()));
+        result.setPageSize(Long.valueOf(pageInfo.getPageSize()));
+        result.setTotal(pageInfo.getTotal());
+        result.setList(pageInfo.getList());
+        return result;
     }
 }
