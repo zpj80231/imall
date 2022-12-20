@@ -61,4 +61,14 @@ public interface UmsAdminService extends IService<UmsAdminEntity> {
      * @return {@link List}<{@link UmsRoleEntity}>
      */
     List<UmsRoleEntity> getRoleList(Long adminId);
+
+    /**
+     * 用户列表分页
+     *
+     * @param keyword  关键字
+     * @param pageNum  页面num
+     * @param pageSize 页面大小
+     * @return {@link List}<{@link UmsAdminEntity}>
+     */
+    List<UmsAdminEntity> findPage(String keyword, Integer pageNum, Integer pageSize);
 }

@@ -1,7 +1,9 @@
 package com.imall.admin.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
 import com.imall.admin.domain.bo.AdminUserDetails;
 import com.imall.admin.service.UmsAdminService;
 import com.imall.admin.service.dao.UmsAdminRoleRelationDao;
@@ -84,5 +86,16 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper, UmsAdminEnt
     @Override
     public List<UmsRoleEntity> getRoleList(Long adminId) {
         return adminRoleRelationDao.getRoleList(adminId);
+    }
+
+    @Override
+    public List<UmsAdminEntity> findPage(String keyword, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        LambdaQueryWrapper<UmsAdminEntity> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StrUtil.isNotBlank(keyword), UmsAdminEntity::getUsername, keyword)
+                .or()
+                .like(StrUtil.isNotBlank(keyword), UmsAdminEntity::getNickName, keyword);
+        List<UmsAdminEntity> list = list(queryWrapper);
+        return list;
     }
 }

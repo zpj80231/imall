@@ -1,7 +1,6 @@
 package com.imall.admin.controller;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imall.admin.domain.bo.AdminUserDetails;
 import com.imall.admin.domain.dto.TokenDto;
 import com.imall.admin.domain.dto.UmsAdminLoginDto;
@@ -92,13 +91,14 @@ public class UmsAdminController {
     }
 
     @GetMapping("/findPage")
-    @ApiOperation(value = "分页查询用户信息", notes = "用户")
-    public CommonResult<CommonPage<UmsAdminEntity>> findPage(@RequestParam(required = true, name = "pageNum", defaultValue = "1") Long pageNum,
-                                                             @RequestParam(required = true, name = "pageSize", defaultValue = "2") Long pageSize) {
-        log.info("pageNum: [{}], pageSize: [{}]", pageNum, pageSize);
-        Page<UmsAdminEntity> page = new Page<>(pageNum, pageSize);
-        adminService.page(page);
-        CommonPage<UmsAdminEntity> restPage = CommonPage.restPage(page);
+    @ApiOperation(value = "根据用户名或姓名分页查询用户信息", notes = "用户")
+    public CommonResult<CommonPage<UmsAdminEntity>> findPage(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        log.info("keyword: [{}], pageNum: [{}], pageSize: [{}]", keyword, pageNum, pageSize);
+        List<UmsAdminEntity> list = adminService.findPage(keyword, pageNum, pageSize);
+        CommonPage<UmsAdminEntity> restPage = CommonPage.restPage(list);
         return CommonResult.success(restPage);
     }
 
