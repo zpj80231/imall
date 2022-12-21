@@ -23,9 +23,9 @@ public class DynamicAccessDecisionManager implements AccessDecisionManager {
     /**
      * DynamicSecurityMetadataSource.getAttributes 返回不为空，则进入进行权限验证
      *
-     * @param authentication   当前登录用户拥有的权限
+     * @param authentication   当前登录用户拥有的权限（用户权限）
      * @param object
-     * @param configAttributes DynamicSecurityMetadataSource.getAttributes 返回集合
+     * @param configAttributes DynamicSecurityMetadataSource.getAttributes 返回集合（匹配系统权限），不为空则进入此方法
      * @throws AccessDeniedException
      * @throws InsufficientAuthenticationException
      */
@@ -35,7 +35,7 @@ public class DynamicAccessDecisionManager implements AccessDecisionManager {
         if (CollUtil.isEmpty(configAttributes)) {
             return;
         }
-        // 权限匹配，有权限则请求成功
+        // 系统权限肯定已经匹配，若用户权限相匹配，有权限则请求成功
         Set<ConfigAttribute> attributes = configAttributes.stream()
                 .filter(auth -> authentication.getAuthorities().contains(new SimpleGrantedAuthority(auth.getAttribute())))
                 .collect(Collectors.toSet());

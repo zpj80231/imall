@@ -1,5 +1,6 @@
 package com.imall.admin.component;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
@@ -20,10 +21,11 @@ import java.io.IOException;
  * @author zhangpengjun
  * @date 2022/9/5
  */
+@Slf4j
 public class DynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
 
     @Autowired
-    private DynamicSecurityMetadataSource dynamicSecurityProperties;
+    private DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
     @Autowired
     private DynamicAccessDecisionManager dynamicAccessDecisionManager;
 
@@ -43,9 +45,8 @@ public class DynamicSecurityFilter extends AbstractSecurityInterceptor implement
         try {
             filterInvocation.getChain().doFilter(filterInvocation.getRequest(), filterInvocation.getResponse());
         } finally {
-            super.finallyInvocation(token);
+            super.afterInvocation(token, null);
         }
-        super.afterInvocation(token, null);
     }
 
     @Override
@@ -55,6 +56,6 @@ public class DynamicSecurityFilter extends AbstractSecurityInterceptor implement
 
     @Override
     public SecurityMetadataSource obtainSecurityMetadataSource() {
-        return dynamicSecurityProperties;
+        return dynamicSecurityMetadataSource;
     }
 }

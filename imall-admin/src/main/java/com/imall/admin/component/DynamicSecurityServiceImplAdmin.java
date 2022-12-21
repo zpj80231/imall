@@ -27,7 +27,7 @@ public class DynamicSecurityServiceImplAdmin implements DynamicSecurityService {
     public Map<String, ConfigAttribute> loadDataSource() {
         Map<String, ConfigAttribute> map = new HashMap<>();
         List<UmsResourceEntity> resourceList = resourceService.list();
-        resourceList.forEach(resource -> map.put(resource.getUrl(), new SecurityConfig("Permission:" + resource.getId())));
+        resourceList.forEach(resource -> map.put(resource.getUrl(), new SecurityConfig("Permission:" + resource.getUrl())));
         return map;
     }
 
