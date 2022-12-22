@@ -2,7 +2,9 @@ package com.imall.admin.component;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.URLUtil;
+import com.imall.admin.config.IgnoreUrlsConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
@@ -25,6 +27,8 @@ public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMe
     private static Map<String, ConfigAttribute> configAttributeMap = null;
     @Autowired
     private DynamicSecurityService dynamicSecurityService;
+    @Autowired
+    private IgnoreUrlsConfig ignoreUrlsConfig;
 
     @PostConstruct
     public void loadDataSource() {
@@ -53,9 +57,20 @@ public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMe
         // 请求url
         String url = ((FilterInvocation) object).getRequestUrl();
         String path = URLUtil.getPath(url);
+        AntPathMatcher pathMatcher = new AntPathMatcher();
+        // 白名单，不需要保护的资源路径允许访问
+        for (String ignoreUrl : ignoreUrlsConfig.getUrls()) {
+            if (pathMatcher.match(ignoreUrl, path)) {
+                return configAttributes;
+            }
+        }
+        // 白名单，允许跨域请求的OPTIONS请求
+        String method = ((FilterInvocation) object).getRequest().getMethod();
+        if (HttpMethod.OPTIONS.toString().equals(method)) {
+            return configAttributes;
+        }
         // 当前系统所有权限
         configAttributeMap = CollUtil.isEmpty(configAttributeMap) ? dynamicSecurityService.loadDataSource() : configAttributeMap;
-        AntPathMatcher pathMatcher = new AntPathMatcher();
         // 判断当前请求，是否在系统权限范围内
         configAttributeMap.forEach((k, v) -> {
             if (pathMatcher.match(k, path)) {
