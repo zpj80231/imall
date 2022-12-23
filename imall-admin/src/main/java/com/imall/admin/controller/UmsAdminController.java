@@ -74,6 +74,7 @@ public class UmsAdminController {
     @PostMapping("/login")
     @ApiOperation("登录")
     public CommonResult login(@RequestBody @Validated UmsAdminLoginDto umsAdminLoginDto) {
+        log.info("用户登录：{}", umsAdminLoginDto);
         String token = adminService.login(umsAdminLoginDto.getUsername(), umsAdminLoginDto.getPassword());
         // todo redis中保存用户登录信息
         return CommonResult.success(new TokenDto(token, tokenHead));
@@ -86,6 +87,7 @@ public class UmsAdminController {
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         AdminUserDetails loginUser = (AdminUserDetails) authenticationToken.getPrincipal();
         String username = loginUser.getUmsAdminEntity().getUsername();
+        log.info("用户退出：{}", username);
         // todo 删除redis中用户登录信息
         return CommonResult.success("退出成功");
     }
