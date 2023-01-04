@@ -3,13 +3,13 @@ package com.imall.notice.consumer;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.imall.notice.service.EventSendingService;
 import com.imall.notice.vo.PushInfoDTO;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import service.EventSendingService;
 
 import java.util.HashMap;
 import java.util.List;

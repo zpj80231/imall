@@ -1,4 +1,4 @@
-package service.impl;
+package com.imall.notice.service.impl;
 
 import cn.hutool.http.ContentType;
 import cn.hutool.http.Header;
@@ -8,10 +8,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import com.imall.notice.constant.ThreadPoolConstant;
+import com.imall.notice.service.EventSendingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import service.EventSendingService;
 
 import java.util.Collection;
 import java.util.HashSet;

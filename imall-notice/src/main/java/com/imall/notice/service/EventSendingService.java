@@ -1,4 +1,4 @@
-package service;
+package com.imall.notice.service;
 
 import com.alibaba.fastjson.JSONObject;
 
