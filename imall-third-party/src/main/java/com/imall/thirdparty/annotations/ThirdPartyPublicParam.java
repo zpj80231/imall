@@ -27,6 +27,6 @@ public @interface ThirdPartyPublicParam {
     /**
      * token类型，用于校验token
      */
-    TokenTypeEnum tokenType();
+    TokenTypeEnum tokenType() default TokenTypeEnum.Empty;
 
 }

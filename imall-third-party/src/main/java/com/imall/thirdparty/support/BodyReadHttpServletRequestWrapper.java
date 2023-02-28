@@ -1,49 +1,61 @@
 package com.imall.thirdparty.support;
 
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StreamUtils;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
 /**
- * description: 重写 MyHttpServletRequestWrapper
+ * 请求体参数包装类，用于解决多次读取请求体body数据的问题。
+ * 由于流对象只能读取一次，如果在过滤器或拦截器中进行读取验证，那么之后在Controller中的参数封装就会报错。
  *
- * @author w
- * @version v1.0
- * @date 2021年4月20日下午3:56:53
- **/
-
-public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletRequestWrapper {
+ * @author zhangpengjun
+ * @date 2023/2/27
+ */
+public class BodyReadHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     /**
      * url请求参数
      */
-    private Map<String, String[]> params = new HashMap<>();
+    private final Map<String, String[]> params = new HashMap<>();
     /**
-     * 用于将流保存下来
+     * 可重复读取的请求体
      */
-    private byte[] requestBody = null;
+    private byte[] body;
 
-    public HttpServletRequestWrapper(HttpServletRequest request) throws IOException {
+    public BodyReadHttpServletRequestWrapper(HttpServletRequest request) throws IOException {
         super(request);
         this.params.putAll(request.getParameterMap());
-        requestBody = StreamUtils.copyToByteArray(request.getInputStream());
+        this.body = StreamUtils.copyToByteArray(request.getInputStream());
+        emptyBodyHandling(request);
+    }
+
+    private void emptyBodyHandling(HttpServletRequest request) {
+        String method = request.getMethod();
+        String contentType = request.getContentType();
+        if (ObjectUtils.isEmpty(body) && (HttpMethod.GET.matches(method) || contentType.contains(MediaType.APPLICATION_JSON_VALUE))) {
+            body = "{}".getBytes(StandardCharsets.UTF_8);
+        }
     }
 
     @Override
-    public ServletInputStream getInputStream() throws IOException {
-        // 读取 requestBody 中的数据
-        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(requestBody);
-
+    public ServletInputStream getInputStream() {
+        // 读取数据时，每次模拟构建一个新的流对象，读取请求体中的数据
+        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body);
         return new ServletInputStream() {
             @Override
             public boolean isFinished() {
@@ -57,18 +69,18 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
 
             @Override
             public void setReadListener(ReadListener readListener) {
-
+                // default implementation ignored
             }
 
             @Override
-            public int read() throws IOException {
+            public int read() {
                 return byteArrayInputStream.read();
             }
         };
     }
 
     @Override
-    public BufferedReader getReader() throws IOException {
+    public BufferedReader getReader() {
         return new BufferedReader(new InputStreamReader(getInputStream()));
     }
 
@@ -103,7 +115,7 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
     public String[] getParameterValues(String name) {
         String[] values = params.get(name);
         if (values == null || values.length == 0) {
-            return null;
+            return new String[0];
         }
         return values;
     }
@@ -147,7 +159,7 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
      * @date 2021年4月20日 下午4:02:29
      */
     public byte[] getRequestBody() {
-        return requestBody;
+        return body;
     }
 
     /**
@@ -158,6 +170,6 @@ public class HttpServletRequestWrapper extends javax.servlet.http.HttpServletReq
      * @date 2022/09/11
      */
     public void setRequestBody(byte[] requestBody) {
-        this.requestBody = requestBody;
+        this.body = requestBody;
     }
 }

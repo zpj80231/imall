@@ -4,7 +4,7 @@ import cn.hutool.core.util.ArrayUtil;
 import com.alibaba.fastjson.JSON;
 import com.imall.thirdparty.common.ThirdPartyPublicParamPlugin;
 import com.imall.thirdparty.constants.ThirdPartyConstant;
-import com.imall.thirdparty.support.HttpServletRequestWrapper;
+import com.imall.thirdparty.support.BodyReadHttpServletRequestWrapper;
 import com.imall.thirdparty.utils.IpUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class ThirdPartyPublicParamInterceptor implements HandlerInterceptor {
         ThirdPartyPublicParamPlugin.setIsCheckTimestamp(ThirdPartyConstant.checkTimestamp);
         // 白名单跳过校验
         String ipAddr = IpUtil.getIpAddr(request);
-        HttpServletRequestWrapper requestWrapper = (HttpServletRequestWrapper) request;
+        BodyReadHttpServletRequestWrapper requestWrapper = (BodyReadHttpServletRequestWrapper) request;
         HashMap<String, Object> otherParams = new HashMap<>();
         otherParams.put("timestamp", System.currentTimeMillis() / 1000);
         if (requestWrapper.getMethod().equals(HttpMethod.GET.name()) && ArrayUtil.isEmpty(requestWrapper.getRequestBody())) {
