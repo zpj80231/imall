@@ -2,9 +2,9 @@ package com.imall.admin.config;
 
 import com.imall.common.config.BaseSwaggerConfig;
 import com.imall.common.domain.SwaggerProperties;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import com.imall.common.support.SwaggerPrintConfig;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.context.annotation.Import;
 
 /**
  * Swagger2 配置
@@ -13,8 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @date 2022/8/24
  */
 @Configuration
-@EnableSwagger2
-@ConditionalOnProperty(prefix = "swagger", name = "show", havingValue = "true")
+@Import(SwaggerPrintConfig.class)
 public class Swagger2Config extends BaseSwaggerConfig {
 
     @Override

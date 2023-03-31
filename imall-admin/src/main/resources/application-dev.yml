@@ -44,6 +44,6 @@ logging:
   pattern:
     dateformat: yyyy-MM-dd HH:mm:ss.SSS
   level:
-    com.imall: debug
+    com.imall.admin: debug
 #  file:
 #    path: logs/
