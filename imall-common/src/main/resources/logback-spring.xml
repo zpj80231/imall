@@ -21,7 +21,7 @@
 
     <!-- 日志最大的历史 30天 -->
     <property name="maxHistory" value="30"/>
-    <property name="maxFileSize" value="10MB"/>
+    <property name="maxFileSize" value="100MB"/>
     <property name="LOGS_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}"/>
 
     <!-- ConsoleAppender 控制台输出日志 -->
@@ -81,7 +81,7 @@
     <jmxConfigurator/>
 
     <!-- root级别 INFO -->
-    <root level="DEBUG">
+    <root level="INFO">
         <!-- 文件输出 -->
         <appender-ref ref="FILE"/>
         <!-- 控制台输出 -->
