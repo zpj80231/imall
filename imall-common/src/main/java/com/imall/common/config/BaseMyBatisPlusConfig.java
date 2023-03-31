@@ -6,12 +6,16 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.imall.common.support.DynamicTableNamePlugin;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.util.StringUtils;
 
 /**
  * @author zhangpengjun
  * @date 2022/7/18
  */
+@Configuration
+@EnableTransactionManagement
 public class BaseMyBatisPlusConfig {
     /**
      * 分页插件
