@@ -21,7 +21,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 public class InheritableRequestAspect {
 
-    @Pointcut("@annotation(org.springframework.scheduling.annotation.Async)")
+    // 直接拦截Async注解后，在异步方法中获取request时，有时生效有时不生效，可能是个bug
+    // @Pointcut("@annotation(org.springframework.scheduling.annotation.Async)")
+    // 推荐：直接在controller拦截的话就没问题
+    @Pointcut("execution(* com.imall..controller..*.*(..))")
     public void car() {
 
     }
