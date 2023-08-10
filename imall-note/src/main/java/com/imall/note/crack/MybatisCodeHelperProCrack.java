@@ -14,24 +14,40 @@ public class MybatisCodeHelperProCrack {
     private static final String GSON_2_10_1_JAR_PATH = "D:\\maven\\repositroy\\com\\google\\code\\gson\\gson\\2.10.1\\gson-2.10.1.jar";
 
     public static void main(String[] args) throws NotFoundException, CannotCompileException, IOException {
-        crack321();
+        crack322();
     }
 
+    /**
+     * MyBatisCodeHelper-Pro 3.2.2 crack
+     */
+    private static void crack322() throws NotFoundException, CannotCompileException, IOException {
+        String findValidToClassPath = "com.ccnode.codegenerator.w.d.c";
+        String findGsonClassPath = "com.ccnode.codegenerator.w.f.a";
+        String findGsonClassPathMethodName = "a";
+        crack(findValidToClassPath, findGsonClassPath, findGsonClassPathMethodName);
+    }
+
+    /**
+     * MyBatisCodeHelper-Pro 3.2.1 crack
+     */
     private static void crack321() throws NotFoundException, CannotCompileException, IOException {
-        String domainObjectClassPathFromMbp = "com.ccnode.codegenerator.T.e.b";
-        String gsonClassPathFromMbp = "com.ccnode.codegenerator.T.c.a";
-        String gsonClassMethodNameFromMbp = "a";
-        crack(domainObjectClassPathFromMbp, gsonClassPathFromMbp, gsonClassMethodNameFromMbp);
+        String findValidToClassPath = "com.ccnode.codegenerator.T.e.b";
+        String findGsonClassPath = "com.ccnode.codegenerator.T.c.a";
+        String findGsonClassPathMethodName = "a";
+        crack(findValidToClassPath, findGsonClassPath, findGsonClassPathMethodName);
     }
 
+    /**
+     * MyBatisCodeHelper-Pro 3.2.0 crack
+     */
     private static void crack320() throws NotFoundException, CannotCompileException, IOException {
-        String modelClassPathFromMbp = "com.ccnode.codegenerator.T.a.b";
-        String gsonClassPathFromMbp = "com.ccnode.codegenerator.T.e.c";
-        String gsonClassMethodNameFromMbp = "a";
-        crack(modelClassPathFromMbp, gsonClassPathFromMbp, gsonClassMethodNameFromMbp);
+        String findValidToClassPath = "com.ccnode.codegenerator.T.a.b";
+        String findGsonClassPath = "com.ccnode.codegenerator.T.e.c";
+        String findGsonClassPathMethodName = "a";
+        crack(findValidToClassPath, findGsonClassPath, findGsonClassPathMethodName);
     }
 
-    private static void crack(String modelClassPathFromMbp, String gsonClassPathFromMbp, String gsonClassMethodNameFromMbp)
+    private static void crack(String findValidToClassPath, String findGsonClassPath, String findGsonClassPathMethodName)
             throws NotFoundException, CannotCompileException, IOException {
         // 加载类
         ClassPool classPool = ClassPool.getDefault();
@@ -40,11 +56,11 @@ public class MybatisCodeHelperProCrack {
         classPool.appendClassPath(GSON_2_10_1_JAR_PATH);
 
         // 获取指定类
-        CtClass ctClass = classPool.get(gsonClassPathFromMbp);
-        CtMethod parseLicenseMethod = ctClass.getDeclaredMethod(gsonClassMethodNameFromMbp, new CtClass[]{classPool.get("java.lang.String")});
+        CtClass ctClass = classPool.get(findGsonClassPath);
+        CtMethod parseLicenseMethod = ctClass.getDeclaredMethod(findGsonClassPathMethodName, new CtClass[]{classPool.get("java.lang.String")});
         String body = "{" +
                 "\tcom.google.gson.Gson gson = new com.google.gson.Gson();" +
-                "\t" + modelClassPathFromMbp + " e = (" + modelClassPathFromMbp + ")gson.fromJson($1," + modelClassPathFromMbp + ".class);" +
+                "\t" + findValidToClassPath + " e = (" + findValidToClassPath + ")gson.fromJson($1," + findValidToClassPath + ".class);" +
                 "\treturn e;" +
                 "}";
         parseLicenseMethod.setBody(body);
@@ -52,6 +68,5 @@ public class MybatisCodeHelperProCrack {
         // 对修改的文件，写出到一个新文件
         ctClass.writeFile("D:\\crack");
     }
-
-
+    
 }
