@@ -10,11 +10,25 @@ import java.io.IOException;
  */
 public class MybatisCodeHelperProCrack {
 
+    /**
+     * origin jar: C:\Users\{user}\AppData\Roaming\JetBrains\IntelliJIdea2023.2\plugins\MyBatisCodeHelper-Pro\lib
+     */
     private static final String MY_BATIS_CODE_HELPER_PRO_OBFUSS_JAR_PATH = "D:\\crack\\MyBatisCodeHelper-Pro-obfuss.jar";
     private static final String GSON_2_10_1_JAR_PATH = "D:\\maven\\repositroy\\com\\google\\code\\gson\\gson\\2.10.1\\gson-2.10.1.jar";
+    public static final String WRITE_CLASS_FILE_DIRECTORY_NAME = "D:\\crack";
 
     public static void main(String[] args) throws NotFoundException, CannotCompileException, IOException {
-        crack322();
+        crack327();
+    }
+
+    /**
+     * MyBatisCodeHelper-Pro 3.2.7 crack
+     */
+    private static void crack327() throws NotFoundException, CannotCompileException, IOException {
+        String findValidToClassPath = "com.ccnode.codegenerator.J.d.f";
+        String findGsonClassPath = "com.ccnode.codegenerator.J.e.e";
+        String findGsonClassPathMethodName = "a";
+        crack(findValidToClassPath, findGsonClassPath, findGsonClassPathMethodName);
     }
 
     /**
@@ -66,7 +80,7 @@ public class MybatisCodeHelperProCrack {
         parseLicenseMethod.setBody(body);
 
         // 对修改的文件，写出到一个新文件
-        ctClass.writeFile("D:\\crack");
+        ctClass.writeFile(WRITE_CLASS_FILE_DIRECTORY_NAME);
     }
     
 }
