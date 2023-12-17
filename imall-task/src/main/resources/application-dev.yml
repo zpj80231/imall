@@ -9,11 +9,11 @@ spring:
         config:
           url: jdbc:mysql://127.0.0.1:3306/config?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false
           username: root
-          password: root@1234
+          password: 12345678
         asteriskcdrdb:
           url: jdbc:mysql://127.0.0.1:3306/asteriskcdrdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false
           username: root
-          password: root
+          password: 12345678
 
 # 启用Swagger
 swagger:

@@ -11,11 +11,11 @@ spring:
         imall:
           url: jdbc:mysql://127.0.0.1:3306/imall?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&zeroDateTimeBehavior=convertToNull
           username: root
-          password: root
+          password: 12345678
         config:
           url: jdbc:mysql://127.0.0.1:3306/imall?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false&zeroDateTimeBehavior=convertToNull
           username: root
-          password: root
+          password: 12345678
       durid:
         initial-size: 4
         max-active: 20

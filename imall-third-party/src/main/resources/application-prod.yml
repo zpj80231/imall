@@ -8,7 +8,7 @@ spring:
         asteriskcdrdb:
           url: jdbc:mysql://localhost:3306/asteriskcdrdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&useSSL=false
           username: root
-          password: root
+          password: 12345678
   redis:
     host: localhost
     port: 6379
