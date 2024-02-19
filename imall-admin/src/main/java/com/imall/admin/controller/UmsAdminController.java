@@ -18,14 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -57,6 +50,17 @@ public class UmsAdminController {
     @ApiOperation("hello")
     public String hello() {
         return "hello";
+    }
+
+    @GetMapping("/hello1/{name}")
+    public String hello1(@PathVariable String name) {
+        return name;
+    }
+
+    @RequestMapping("/hello2")
+    @ApiOperation("hello2")
+    public String hello2() {
+        return "hello2";
     }
 
     @ApiOperation(value = "刷新token")
