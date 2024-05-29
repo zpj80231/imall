@@ -9,4 +9,5 @@ for log in $logs
                 echo "clean logs : $log"
                 cat /dev/null > $log
         done
+docker image prune -f
 echo "======== end clean docker containers logs ========"

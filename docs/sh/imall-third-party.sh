@@ -49,8 +49,15 @@ start() {
     echo "$APP_NAME is already running pid is ${pid}"
   else
     # jar服务启动脚本
-    nohup java $JAVA_OPTS -jar $JAR_PATH/$JAR_NAME > /dev/null 2>&1 &
-    echo "start $APP_NAME successed pid is $! "
+    nohup java $JAVA_OPTS -jar $JAR_PATH/$JAR_NAME > service.log 2>&1 &
+    sleep 5  # 等待5秒以确保服务有时间启动
+    is_exist
+    if [ $? -eq "1" ]; then
+      echo "start $APP_NAME successed pid is $! "
+      rm -f service.log  # 启动成功时删除日志文件
+    else
+      echo "start $APP_NAME failed，please check service log for details! "
+    fi
    fi
   status
 }
