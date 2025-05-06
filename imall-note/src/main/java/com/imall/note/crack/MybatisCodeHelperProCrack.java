@@ -8,23 +8,35 @@ import java.io.IOException;
 /**
  * @author zhangpengjun
  * @date 2023/6/26
+ * @see <a href="https://zpj80231.github.io/znote/views/crack/mybatiscodehelperprocrack.html">MyBatisCodeHelperProCrack Documentation</a>
  */
 @Slf4j
 public class MybatisCodeHelperProCrack {
 
+    public static final String WRITE_CLASS_FILE_DIRECTORY_NAME = "/Users/zhangpj/crack/MyBatisCodeHelper-Pro";
+    private static final String GSON_JAR_PATH = "/Users/zhangpj/.m2/repository/com/google/code/gson/gson/2.9.1/gson-2.9.1.jar";
     /**
      * origin jar
      * win: C:\Users\{user}\AppData\Roaming\JetBrains\IntelliJIdea2023.2\plugins\MyBatisCodeHelper-Pro\lib
      * mac: ~/Library/Application\ Support/JetBrains/IntelliJIdea2024.1/plugins/MyBatisCodeHelper-Pro/lib
      */
-    private static final String MY_BATIS_CODE_HELPER_PRO_OBFUSS_JAR_PATH = "/Users/zhangpj/crack/MyBatisCodeHelper-Pro-obfuss.jar";
-    private static final String GSON_2_10_1_JAR_PATH = "/Users/zhangpj/.m2/repository/com/google/code/gson/gson/2.9.1/gson-2.9.1.jar";
-    public static final String WRITE_CLASS_FILE_DIRECTORY_NAME = "/Users/zhangpj/crack";
+    private static String myBatisCodeHelperProObfussJarPath = WRITE_CLASS_FILE_DIRECTORY_NAME + "/MyBatisCodeHelper-Pro-obfuss.jar";
 
     public static void main(String[] args) throws NotFoundException, CannotCompileException, IOException {
         log.info("MyBatisCodeHelper-Pro crack start");
-        crack330();
+        crack341_2321();
         log.info("MyBatisCodeHelper-Pro crack end");
+    }
+
+    /**
+     * MyBatisCodeHelper-Pro 3.4.1+2321 crack
+     */
+    private static void crack341_2321() throws NotFoundException, CannotCompileException, IOException {
+        myBatisCodeHelperProObfussJarPath = WRITE_CLASS_FILE_DIRECTORY_NAME + "/instrumented-MyBatisCodeHelper-Pro241-3.4.1+2321.jar";
+        String findValidToClassPath = "com.ccnode.codegenerator.af.d.f";
+        String findGsonClassPath = "com.ccnode.codegenerator.af.f.e";
+        String findGsonClassPathMethodName = "a";
+        crack(findValidToClassPath, findGsonClassPath, findGsonClassPathMethodName);
     }
 
     /**
@@ -82,8 +94,8 @@ public class MybatisCodeHelperProCrack {
         // 加载类
         ClassPool classPool = ClassPool.getDefault();
         // 直接使用 jar 路径
-        classPool.appendClassPath(MY_BATIS_CODE_HELPER_PRO_OBFUSS_JAR_PATH);
-        classPool.appendClassPath(GSON_2_10_1_JAR_PATH);
+        classPool.appendClassPath(myBatisCodeHelperProObfussJarPath);
+        classPool.appendClassPath(GSON_JAR_PATH);
 
         // 获取指定类
         CtClass ctClass = classPool.get(findGsonClassPath);
@@ -98,5 +110,5 @@ public class MybatisCodeHelperProCrack {
         // 对修改的文件，写出到一个新文件
         ctClass.writeFile(WRITE_CLASS_FILE_DIRECTORY_NAME);
     }
-    
+
 }
