@@ -63,6 +63,13 @@ public class UmsAdminController {
         return "hello2";
     }
 
+    @GetMapping("/hello3")
+    @ApiOperation("hello3")
+    public CommonResult hello3(@Validated UmsAdminLoginDto umsAdminLoginDto) {
+        log.info("hello3：{}", umsAdminLoginDto);
+        return CommonResult.success(umsAdminLoginDto);
+    }
+
     @ApiOperation(value = "刷新token")
     @RequestMapping(value = "/refreshToken", method = RequestMethod.GET)
     @ResponseBody
